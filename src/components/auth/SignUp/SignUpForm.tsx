@@ -5,12 +5,12 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { pageLevelLocalization } from "@/constants/localization";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -59,9 +59,7 @@ const schema = yup.object().shape({
 });
 
 export default function SignUpForm() {
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    ""
-  );
+  const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -99,150 +97,152 @@ export default function SignUpForm() {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormField
-          control={control}
-          name="firstname"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{pageLevelLocalization.auth.firstname}</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder={pageLevelLocalization.auth.firstname}
-                  {...field}
-                />
-              </FormControl>
-
-              {errors.firstname && (
-                <FormMessage>{errors.firstname.message}</FormMessage>
-              )}
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={control}
-          name="lastname"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{pageLevelLocalization.auth.lastname}</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder={pageLevelLocalization.auth.lastname}
-                  {...field}
-                />
-              </FormControl>
-
-              {errors.lastname && (
-                <FormMessage>{errors.lastname.message}</FormMessage>
-              )}
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{pageLevelLocalization.auth.username}</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder={pageLevelLocalization.auth.username}
-                  {...field}
-                />
-              </FormControl>
-
-              {errors.username && (
-                <FormMessage>{errors.username.message}</FormMessage>
-              )}
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{pageLevelLocalization.auth.password}</FormLabel>
-              <FormControl>
-                <Input
-                  type="password"
-                  placeholder={pageLevelLocalization.auth.password}
-                  {...field}
-                />
-              </FormControl>
-
-              {errors.password && (
-                <FormMessage>{errors.password.message}</FormMessage>
-              )}
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={control}
-          name="phonenumber"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{pageLevelLocalization.auth.phonenumber}</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder={pageLevelLocalization.auth.phonenumber}
-                  {...field}
-                />
-              </FormControl>
-
-              {errors.phonenumber && (
-                <FormMessage>{errors.phonenumber.message}</FormMessage>
-              )}
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={control}
-          name="address"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{pageLevelLocalization.auth.address}</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder={pageLevelLocalization.auth.address}
-                  {...field}
-                />
-              </FormControl>
-
-              {errors.address && (
-                <FormMessage>{errors.address.message}</FormMessage>
-              )}
-            </FormItem>
-          )}
-        />
-        {errorMessage && <div className="text-red-500">{errorMessage}</div>}
-        <RegisterButton />
-        <div
-          onClick={() =>
-            router.push(`${pathname}?${setSearchParams("action", "login")}`)
-          }
+    <div className="flex justify-center mt-24 ">
+      <Form {...form}>
+        <form
+          className="border shadow-md rounded-xl py-16 px-12 flex flex-col gap-4 w-1/2"
+          onSubmit={handleSubmit(onSubmit)}
         >
-          {pageLevelLocalization.auth.goToLogin}
-        </div>
-      </form>
-    </Form>
-  );
-}
+          <div className="flex justify-center pb-8">
+            <Image height={90} width={100} src="./text.svg" alt="logo's text" />
+          </div>
+          <div className="flex gap-6">
+            <FormField
+              control={control}
+              name="firstname"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      className="h-12 "
+                      placeholder={pageLevelLocalization.auth.firstname}
+                      {...field}
+                    />
+                  </FormControl>
 
-function RegisterButton() {
-  /*  const {
-    formState: { isSubmitting },
-  } = useForm(); */
+                  {errors.firstname && (
+                    <FormMessage>{errors.firstname.message}</FormMessage>
+                  )}
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="lastname"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      className="h-12"
+                      placeholder={pageLevelLocalization.auth.lastname}
+                      {...field}
+                    />
+                  </FormControl>
 
-  return (
-    <Button
-      /*   aria-disabled={isSubmitting} */
-      type="submit"
-      /*     className={isSubmitting ? "opacity-50 cursor-not-allowed" : ""} */
-    >
-      Register
-    </Button>
+                  {errors.lastname && (
+                    <FormMessage>{errors.lastname.message}</FormMessage>
+                  )}
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex gap-6">
+            {" "}
+            <FormField
+              control={control}
+              name="username"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      className="h-12"
+                      placeholder={pageLevelLocalization.auth.username}
+                      {...field}
+                    />
+                  </FormControl>
+
+                  {errors.username && (
+                    <FormMessage>{errors.username.message}</FormMessage>
+                  )}
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      className="h-12"
+                      type="password"
+                      placeholder={pageLevelLocalization.auth.password}
+                      {...field}
+                    />
+                  </FormControl>
+
+                  {errors.password && (
+                    <FormMessage>{errors.password.message}</FormMessage>
+                  )}
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex gap-6">
+            <FormField
+              control={control}
+              name="phonenumber"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      className="h-12"
+                      placeholder={pageLevelLocalization.auth.phonenumber}
+                      {...field}
+                    />
+                  </FormControl>
+
+                  {errors.phonenumber && (
+                    <FormMessage>{errors.phonenumber.message}</FormMessage>
+                  )}
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="address"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      className="h-12"
+                      placeholder={pageLevelLocalization.auth.address}
+                      {...field}
+                    />
+                  </FormControl>
+
+                  {errors.address && (
+                    <FormMessage>{errors.address.message}</FormMessage>
+                  )}
+                </FormItem>
+              )}
+            />
+          </div>
+          {errorMessage && <div className="text-red-500">{errorMessage}</div>}
+          <Button className="text-white" type="submit">
+            {pageLevelLocalization.auth.signup}
+          </Button>
+          <div
+            className="cursor-pointer text-sm text-tertiary hover:font-semibold "
+            onClick={() =>
+              router.push(`${pathname}?${setSearchParams("action", "login")}`)
+            }
+          >
+            {pageLevelLocalization.auth.goToLogin}
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 }
 

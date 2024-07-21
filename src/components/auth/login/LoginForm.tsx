@@ -12,6 +12,7 @@ import { pageLevelLocalization } from "@/constants/localization";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { setCookie } from "cookies-next";
+import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -33,7 +34,7 @@ export default function LoginForm() {
   const [errorMessage, setErrorMessage] = useState("");
   const searchParams = useSearchParams();
   const router = useRouter();
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   const form = useForm({
     resolver: yupResolver(schema),
@@ -67,46 +68,57 @@ export default function LoginForm() {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormField
-          control={control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  placeholder={pageLevelLocalization.auth.username}
-                  {...field}
-                />
-              </FormControl>
+    <div className="flex justify-center mt-24 ">
+      <Form {...form}>
+        <form className="border shadow-md rounded-xl py-20 px-12 flex flex-col gap-4 w-1/3" onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex justify-center pb-8"><Image height={90} width={100} src="./text.svg" alt="logo's text"/></div>
+          <FormField
+            control={control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                  className="h-12"
+                    placeholder={pageLevelLocalization.auth.username}
+                    {...field}
+                  />
+                </FormControl>
 
-              <FormMessage>{errors.username?.message}</FormMessage>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  type="password"
-                  placeholder={pageLevelLocalization.auth.password}
-                  {...field}
-                />
-              </FormControl>
+                <FormMessage>{errors.username?.message}</FormMessage>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                  className="h-12"
+                    type="password"
+                    placeholder={pageLevelLocalization.auth.password}
+                    {...field}
+                  />
+                </FormControl>
 
-              <FormMessage>{errors.password?.message}</FormMessage>
-            </FormItem>
-          )}
-        />
-        <div>{errorMessage && <p>{errorMessage}</p>}</div>
-        <Button type="submit">Login</Button>
-        <div onClick={()=> router.push(`${pathname}?${setSearchParams("action", "signup")}`)}>{pageLevelLocalization.auth.goToSignUp}</div>
-      </form>
-    </Form>
+                <FormMessage>{errors.password?.message}</FormMessage>
+              </FormItem>
+            )}
+          />
+          <div>{errorMessage && <p>{errorMessage}</p>}</div>
+          <Button className="text-white" type="submit">{pageLevelLocalization.auth.login}</Button>
+          <div className="cursor-pointer text-sm text-tertiary hover:font-semibold pt-2 "
+            onClick={() =>
+              router.push(`${pathname}?${setSearchParams("action", "signup")}`)
+            }
+          >
+            {pageLevelLocalization.auth.goToSignUp}
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 }
 

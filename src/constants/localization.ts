@@ -10,6 +10,7 @@ export const localization = {
     category: "دسته بندی",
     mainPage: "صفحه اصلی",
     store: "فروشگاه",
+    brand:"نسکا"
     };
     
    
@@ -26,5 +27,8 @@ export const localization = {
       minPass :'باید حداقل هشت کارکتر باشد',
       matchPass:'باید حداقل دارای یک حرف و یک عدد باشد',
       goToSignUp : "حساب کاربری ندارید ؟ ثبت نام کنید",
-      goToLogin: "حساب کاربری دارید ؟ وارد شوید "
+      goToLogin: "حساب کاربری دارید ؟ وارد شوید ",
+      login:"ورود",
+      signup:"ثبت نام",
+      logout:"خروج"
   }}
