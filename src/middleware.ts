@@ -10,10 +10,10 @@ export function middleware(request: NextRequest) {
     const userRole = cookie.get("role")?.value;
 
     if (userRole !== "ADMIN") {
-      return NextResponse.redirect(new URL("/auth/login", request.url));
+      return NextResponse.redirect(new URL("/auth", request.url));
     }
   }
-  if (pathname.startsWith("/auth/login")&& accessToken) {
+  if (pathname.startsWith("/auth")&& accessToken) {
     if (accessToken) {
       return NextResponse.redirect(new URL("/", request.url));
     }
@@ -22,5 +22,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path", "/login"],
+  matcher: ["/dashboard/:path", "/auth"],
 };
