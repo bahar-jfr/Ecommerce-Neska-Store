@@ -1,5 +1,6 @@
 import { localization, pageLevelLocalization } from "@/constants/localization";
 import "@/styles/globals.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -17,6 +18,8 @@ const getTitle = (pathname: string) => {
   }
 };
 
+const queryClient = new QueryClient();
+
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   useEffect(() => {
@@ -24,8 +27,8 @@ export default function App({ Component, pageProps }: AppProps) {
     document.title = title;
   }, [router.pathname]);
   return (
-    <div>
+    <QueryClientProvider client={queryClient}>
       <Component {...pageProps} />
-    </div>
+    </QueryClientProvider>
   );
 }
