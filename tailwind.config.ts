@@ -61,6 +61,9 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      fontFamily: {
+        iransans: ['IRANSans', 'ans-serif'],
+      },
       height: {
         lg: "calc(var(--height) * 5)",
       },
