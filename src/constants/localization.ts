@@ -10,7 +10,7 @@ export const localization = {
     category: "دسته بندی",
     mainPage: "صفحه اصلی",
     store: "فروشگاه",
-    brand:"نسکا"
+    brand:"نسکا",
     };
     
    
@@ -31,4 +31,7 @@ export const localization = {
       login:"ورود",
       signup:"ثبت نام",
       logout:"خروج"
-  }}
+  },
+products:{
+  nonexistent : "ناموجود"
+}}
