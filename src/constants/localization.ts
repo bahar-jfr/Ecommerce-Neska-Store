@@ -33,5 +33,22 @@ export const localization = {
       logout:"خروج"
   },
 products:{
-  nonexistent : "ناموجود"
-}}
+  nonexistent : "ناموجود",
+  singleProduct:{
+    productImageOf : "عکس محصول شماره",
+    buyer:"خریدار",
+    points:"امتیاز",
+    brand:"برند",
+    description: "توضیحات",
+    addToCart: "افزودن به سبد خرید",
+    importProduct:"محصول وارداتی",
+    Satisfaction: "رضایت از کالا",
+    process:"عملکرد",
+    strong:"عالی",
+    medium:"متوسط",
+    weak:"ضعیف",
+    guarantee:"گارانتی و اصالت فیزیکی کالا"
+  }
+}
+
+}
