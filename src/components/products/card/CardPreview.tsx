@@ -8,7 +8,9 @@ import {
 } from "@/components/ui/card";
 import { localization, pageLevelLocalization } from "@/constants/localization";
 import { IProduct } from "@/types";
+import { formatPrice } from "@/utils/formats";
 import Image from "next/image";
+import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 
 export default function CardPreview({ data }: { data: IProduct }) {
@@ -19,6 +21,7 @@ export default function CardPreview({ data }: { data: IProduct }) {
       : (data.rating.rate / data.rating.count).toFixed(1);
 
   return (
+    <Link href={{pathname:"/products/[id]",query:{ id:data._id}}}>
     <Card className="h-full w-fit rounded-2xl px-6 py-10 shadow-md cursor-pointer hover:shadow-lg">
       <CardHeader>
         <CardTitle>
@@ -70,17 +73,14 @@ export default function CardPreview({ data }: { data: IProduct }) {
             </div>
           )}
           <div className="flex  flex-row-reverse items-center gap-2">
-            <FaStar className="text-orange-500" />
+            <FaStar className="text-attention" />
             <p className="text-primary-foreground">{rate}</p>
           </div>
         </div>
       </CardFooter>
     </Card>
+    
+    </Link>
   );
 }
 
-function formatPrice(price: number) {
-  return new Intl.NumberFormat("en-US", {
-    minimumFractionDigits: 0,
-  }).format(price);
-}
