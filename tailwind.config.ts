@@ -40,6 +40,14 @@ const config = {
           DEFAULT: "hsl(var(--quaternary))",
           foreground: "hsl(var(--quaternary-foreground))",
         },
+        attention: {
+          DEFAULT: "hsl(var(--attention))",
+          foreground: "hsl(var(--attention-foreground))",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -62,13 +70,13 @@ const config = {
         },
       },
       fontFamily: {
-        iransans: ['IRANSans', 'ans-serif'],
+        iransans: ["IRANSans", "ans-serif"],
       },
       height: {
         lg: "calc(var(--height) * 5)",
       },
-      boxShadow:{
-        main: "0px 0px 6px 0px rgba(148 202 214)"
+      boxShadow: {
+        main: "0px 0px 6px 0px rgba(148 202 214)",
       },
       borderRadius: {
         lg: "var(--radius)",

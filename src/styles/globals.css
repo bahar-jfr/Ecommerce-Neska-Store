@@ -25,6 +25,12 @@
     --quaternary: 191 45% 71%;
     --quaternary-foreground: 191 45% 71%;
 
+    --attention: 25 95% 53%;
+    --attention--foreground: 21 90% 48%;
+
+    --success: 142 71% 45%;
+    --success--foreground: 142 76% 36%;
+
     --chart-1: 191 51% 35%;
     --chart-2: 160 60% 55%;
     --chart-3: 30 80% 58%;
