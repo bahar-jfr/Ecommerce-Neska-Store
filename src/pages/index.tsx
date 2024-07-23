@@ -1,7 +1,14 @@
-import { Vazirmatn } from "next/font/google";
+import { MainLayout } from "@/components/layouts/main/Layout";
+import { ReactElement } from "react";
 
-const vazirmatn = Vazirmatn({ subsets: ["arabic"] });
-
-export default function Home() {
-  return <main className={` ${vazirmatn.className}`}></main>;
+export default function HomePage() {
+  return (
+    <main className="flex h-screen flex-col items-center justify-between p-24">
+      MAIN SECTION
+    </main>
+  );
 }
+
+HomePage.getLayout = function getLayout(page: ReactElement) {
+  <MainLayout>{page}</MainLayout>;
+};
