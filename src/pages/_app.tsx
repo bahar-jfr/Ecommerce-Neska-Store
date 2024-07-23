@@ -1,8 +1,9 @@
 import { localization, pageLevelLocalization } from "@/constants/localization";
 import "@/styles/globals.css";
+import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { ReactElement, ReactNode, useEffect } from "react";
 
 const getTitle = (pathname: string) => {
   switch (pathname) {
@@ -17,15 +18,22 @@ const getTitle = (pathname: string) => {
   }
 };
 
-export default function App({ Component, pageProps }: AppProps) {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
   useEffect(() => {
     const title = getTitle(router.pathname);
     document.title = title;
   }, [router.pathname]);
-  return (
-    <div>
-      <Component {...pageProps} />
-    </div>
-  );
+
+  const getLayout = Component.getLayout ?? ((page) => page);
+
+  return getLayout(<Component {...pageProps} />)
 }
