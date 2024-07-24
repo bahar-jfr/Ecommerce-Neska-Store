@@ -16,7 +16,7 @@
     --primary: 209 100% 30%;
     --primary-foreground: 209 100% 17%;
 
-    --secondary: 210 40% 96%;
+    --secondary: 210 40% 95%;
     --secondary-foreground: 210 40% 96%;
 
     --tertiary: 191 51% 28%;
@@ -24,6 +24,8 @@
 
     --quaternary: 191 45% 71%;
     --quaternary-foreground: 191 45% 71%;
+
+    --tableRow: 200 30% 80%;
 
     --chart-1: 191 51% 35%;
     --chart-2: 160 60% 55%;

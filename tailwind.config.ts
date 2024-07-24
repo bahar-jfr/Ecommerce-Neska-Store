@@ -1,5 +1,3 @@
-import type { Config } from "tailwindcss";
-
 const config = {
   darkMode: ["class"],
   content: [
@@ -40,6 +38,9 @@ const config = {
           DEFAULT: "hsl(var(--quaternary))",
           foreground: "hsl(var(--quaternary-foreground))",
         },
+        tableRow: {
+          DEFAULT: "hsl(var(--tableRow))",
+        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -64,8 +65,8 @@ const config = {
       height: {
         lg: "calc(var(--height) * 5)",
       },
-      boxShadow:{
-        main: "0px 0px 6px 0px rgba(148 202 214)"
+      boxShadow: {
+        main: "0px 0px 6px 0px rgba(148 202 214)",
       },
       borderRadius: {
         lg: "var(--radius)",
