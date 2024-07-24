@@ -4,10 +4,10 @@ import { ReactNode } from "react";
 export function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <section className="pb-24">
+      <main>
         <Header />
         {children}
-      </section>
+      </main>
     </>
   );
 }
