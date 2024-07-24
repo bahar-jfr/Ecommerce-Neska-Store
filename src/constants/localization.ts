@@ -50,5 +50,42 @@ export const pageLevelLocalization = {
     barChart :"نمودار میله ای",
     pieChart:"نمودار دایره ای ",
     calendar: "تقویم"
-  }
+  },
+  dashboard:{
+    dashboard:"داشبورد",
+    newOrders:"سفارشات جدید",
+    profi : "سود خالص",
+    totalSale: "کل فروش",
+    newUser: "کاربر جدید",
+    salesAmount : "میزان فروش",
+    cost : "هزینه",
+    income: "درآمد",
+    tir : "تیر",
+    mordad : "مرداد",
+    statistics :"آمار بازدید",
+    browsers:" مرورگر ها",
+    viewers: "بازدید کنندگان"
+  },
+  delivary: {
+    userName: "نام کاربر",
+    totalPrice: "مجموع مبلغ",
+    timeSubmitOrder: "زمان ثبت سفارش",
+   orderStatus: "وضعیت سفارش",
+    checkOrder: "بررسی سفارش",
+    manageOrders: "مدیریت سفارش ها",
+    pendingOrders: "سفارش های در انتظار ارسال",
+    deliveredOrders: "سفارش های ارسال شده",
+  },
+  inventory:{
+    manageInventory:"مدیریت موجودی و قیمت",
+    inventory:"موجودی",
+    saveChanges: "ثبت تغییرات",
+    error: "خطایی در بروزرسانی محصولات رخ داده است"
+  },
+  productsData:{
+    manageProducts:"مدیریت محصولات",
+    productPhoto: "عکس محصول",
+    actions: "عملیات",
+    addProduct:"افزودن محصول"
+  },
 };
