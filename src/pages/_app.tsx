@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/toaster";
 import { localization, pageLevelLocalization } from "@/constants/localization";
 import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -57,6 +58,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <QueryClientProvider client={queryClient}>
       {getLayout(<Component {...pageProps} />)}
+      <Toaster />
     </QueryClientProvider>
   );
 }

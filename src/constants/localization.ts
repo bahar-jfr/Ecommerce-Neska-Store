@@ -80,6 +80,7 @@ export const pageLevelLocalization = {
     manageInventory:"مدیریت موجودی و قیمت",
     inventory:"موجودی",
     saveChanges: "ثبت تغییرات",
+    success:"بروزرسانی با موفقیت انجام شد",
     error: "خطایی در بروزرسانی محصولات رخ داده است"
   },
   productsData:{
