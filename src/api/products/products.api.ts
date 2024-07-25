@@ -6,6 +6,10 @@ export async function getProducts() {
   return res.data;
 }
 
+export async function deleteProduct(id:string){
+  return api.delete(`/products/${id}`)
+}
+
 export async function editProduct(product: Partial<IProduct>) {
   const { _id, ...rest } = product;
   return await api.patch(`/products/${_id}`, rest);

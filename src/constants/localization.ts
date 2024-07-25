@@ -87,6 +87,10 @@ export const pageLevelLocalization = {
     manageProducts:"مدیریت محصولات",
     productPhoto: "عکس محصول",
     actions: "عملیات",
-    addProduct:"افزودن محصول"
+    addProduct:"افزودن محصول",
+    deleteTitle :"آیا از حذف محصول مطمئن هستید؟",
+    deleteDescription :"این عمل غیر قابل بازگشت است و تمام اطلاعات محصول از سرور حذف خواهد شد.",
+    cancel:"لغو",
+    delete:"تایید حذف"
   },
 };
