@@ -1,5 +1,8 @@
-import { api } from "@/api/api.config";
-import { useGetProducts } from "@/api/products/products.queries";
+import {
+  useEditMultiProduct,
+  useGetProducts,
+} from "@/api/products/products.queries";
+/* import Loading from "@/components/shared/Loading"; */
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -12,63 +15,84 @@ import {
 } from "@/components/ui/table";
 import { localization, pageLevelLocalization } from "@/constants/localization";
 import { IProduct } from "@/types";
-import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function TableInventory() {
-  const { data } = useGetProducts();
+  const { data, isLoading } = useGetProducts();
+  const { mutate, isPending } = useEditMultiProduct();
 
-  const [products, setProducts] = useState<IProduct[]>(data?.data?.products);
-  const [editProducts, setEditProducts] = useState<IProduct[]>([]);
-  const [isEdit, SetIsEdit] = useState<Record<string, boolean | number>>({
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [editProducts, setEditProducts] = useState<Partial<IProduct>[]>([]);
+  const [isEdit, SetIsEdit] = useState<Record<string, boolean | string>>({
     price: false,
     quantity: false,
   });
-  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setProducts(data?.data?.products);
+  }, [data]);
 
   const editHandler = (editedProduct: IProduct) => {
     const finded = editProducts.find((item) => item._id === editedProduct._id);
 
     if (!finded) {
-      setEditProducts([...editProducts, editedProduct]);
+      setEditProducts([
+        ...editProducts,
+        {
+          quantity: editedProduct.quantity,
+          price: editedProduct.price,
+          _id: editedProduct._id,
+        },
+      ]);
     } else {
       const index = editProducts.indexOf(finded);
       let temp = editProducts;
-      temp[index] = editedProduct;
-      setEditProducts(temp);
+      (temp[index] = {
+        quantity: editedProduct.quantity,
+        price: editedProduct.price,
+        _id: editedProduct._id,
+      }),
+        setEditProducts(temp);
     }
-  };
-
-  const formatNumberToFarsi = (number: number) => {
-    return new Intl.NumberFormat("fa-IR", { useGrouping: true }).format(number);
   };
 
   const changeHandler = async () => {
-    try {
-      await Promise.all(
-        editProducts.map(async (product) => {
-          await api.patch(`/products/${product._id}`, {
-            price: product.price,
-            quantity: product.quantity,
-          });
-        })
-      );
-      setEditProducts([]);
-      setError(null);
-    } catch (error) {
-      setError(`${pageLevelLocalization.inventory.error}`);
-    }
+    mutate(editProducts);
+    setEditProducts([]);
   };
+
+  
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement>,
+    product: IProduct,
+    field: string,
+    index: number
+  ) => {
+    let temp = [...products];
+    temp[index] = { ...product, [field]: +e.target.value };
+    SetIsEdit((prev) => ({ ...prev, [field]: false }));
+    setProducts(temp);
+    editHandler(temp[index]);
+  };
+
+  /*   if (isLoading) {
+    return <Loading />;
+  } */
 
   return (
     <div>
-      {error && <div className="error-message">{error}</div>}
       <div className="flex justify-end pb-4">
         <Button
           variant={"default"}
           className="text-white"
-          onSubmit={changeHandler}
+          onClick={changeHandler}
         >
-          {pageLevelLocalization.inventory.saveChanges}
+          {isPending ? (
+            <Loader2 className=" h-4 w-4 animate-spin" />
+          ) : (
+            ` ${pageLevelLocalization.inventory.saveChanges}`
+          )}
         </Button>
       </div>
       <div className="rounded-lg border border-tableRow shadow-lg text-primary-foreground">
@@ -87,11 +111,11 @@ export default function TableInventory() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.data.products.map((product: IProduct, index: number) => {
+            {products?.map((product: IProduct, index: number) => {
               const isEvenRow = index % 2 === 0;
               return (
                 <TableRow
-                  key={product._id}
+                  key={index}
                   className={`${
                     isEvenRow
                       ? "bg-tableRow hover:bg-tableRow"
@@ -101,46 +125,35 @@ export default function TableInventory() {
                   <TableCell>{product.name}</TableCell>
                   <TableCell
                     onClick={() =>
-                      SetIsEdit((prev) => ({ ...prev, price: true }))
+                      SetIsEdit((prev) => ({ ...prev, price: product._id }))
                     }
                   >
-                    {isEdit.price ? (
+                    {isEdit.price === product?._id ? (
                       <input
+                        className="rounded-md pr-2"
                         defaultValue={product.price}
-                        onBlur={(e) => {
-                          let temp = [...products];
-                          temp[index] = { ...product, price: +e.target.value };
-                          SetIsEdit((prev) => ({ ...prev, price: false }));
-                          setProducts(temp);
-                          editHandler(temp[index]);
-                        }}
+                        onBlur={(e) => handleBlur(e, product, "price", index)}
                       />
                     ) : (
-                      <span>{formatNumberToFarsi(product.price)}</span>
+                      <span className="pr-2">{product.price}</span>
                     )}
                   </TableCell>
                   <TableCell
                     className="text-right"
                     onClick={() =>
-                      SetIsEdit((prev) => ({ ...prev, quantity: true }))
+                      SetIsEdit((prev) => ({ ...prev, quantity: product._id }))
                     }
                   >
-                    {isEdit.quantity ? (
+                    {isEdit.quantity === product._id ? (
                       <input
+                        className="rounded-md pr-2"
                         defaultValue={product.quantity}
-                        onBlur={(e) => {
-                          let temp = [...products];
-                          temp[index] = {
-                            ...product,
-                            quantity: +e.target.value,
-                          };
-                          SetIsEdit((prev) => ({ ...prev, quantity: false }));
-                          setProducts(temp);
-                          editHandler(temp[index]);
-                        }}
+                        onBlur={(e) =>
+                          handleBlur(e, product, "quantity", index)
+                        }
                       />
                     ) : (
-                      <span>{product.quantity}</span>
+                      <span className="pr-2">{product.quantity}</span>
                     )}
                   </TableCell>
                 </TableRow>
