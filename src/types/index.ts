@@ -12,17 +12,17 @@ export interface IProduct {
   rating: {rate:number,count:number};
 }
 
-interface ICategory {
+export interface ICategory {
   _id: string;
+  name: string;
   createdAt: string;
   icon: string;
-  name: string;
   slugname: string;
   updatedAt: string;
   __v: number;
 }
 
-interface ISubcategory {
+export interface ISubcategory {
   _id: string;
   category: string;
   name: string;

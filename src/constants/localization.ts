@@ -10,6 +10,7 @@ export const localization = {
   adminPanel: "پنل ادمین",
   productName: "نام محصول",
   category: "دسته بندی",
+  subcategory:"زیر مجموعه",
   mainPage: "صفحه اصلی",
   store: "فروشگاه",
   brand: "نسکا",
@@ -91,6 +92,13 @@ export const pageLevelLocalization = {
     deleteTitle :"آیا از حذف محصول مطمئن هستید؟",
     deleteDescription :"این عمل غیر قابل بازگشت است و تمام اطلاعات محصول از سرور حذف خواهد شد.",
     cancel:"لغو",
-    delete:"تایید حذف"
+    delete:"تایید حذف",
+    editProduct:"ویرایش محصول",
+   require: "الزامی است",
+   quantity: "تعداد",
+   discount:"تخفیف",
+   description:"توضیحات",
+   choose: "را انتخاب کنید",
+   submit:"ذخیره"
   },
 };

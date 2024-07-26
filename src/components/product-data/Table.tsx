@@ -1,5 +1,7 @@
-
-import { useDeleteProduct, useGetProducts } from "@/api/products/products.queries";
+import {
+  useDeleteProduct,
+  useGetProducts,
+} from "@/api/products/products.queries";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -9,16 +11,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 
-import { localization, pageLevelLocalization } from "@/constants/localization";
-import Image from "next/image";
-import { IProduct } from "@/types";
 import AlertModal from "@/components/product-data/AlertModal";
+import Modal from "@/components/product-data/Modal";
+import { localization, pageLevelLocalization } from "@/constants/localization";
+import { IProduct } from "@/types";
+import Image from "next/image";
+import EditForm from "./EditForm";
 
 export default function TableProduct() {
   const { data } = useGetProducts();
-    const {mutate}=useDeleteProduct()
+  const { mutate } = useDeleteProduct();
 
   return (
     <div className="flex flex-col gap-4 ">
@@ -68,12 +71,15 @@ export default function TableProduct() {
                     {product.category.name}/{product.subcategory.name}
                   </TableCell>
                   <TableCell className="text-center">
-                    <div className="flex items-center gap-4 justify-center" >
-                   <span className="transition-all ease-in p-2 hover:bg-tableRow hover:scale-125 rounded-full"> <FaRegEdit /></span>
-                   <span className="transition-all ease-in px-2 py-1 hover:bg-tableRow hover:scale-125 rounded-full">
-                    <AlertModal id={product._id} /> 
-                 </span>
-                      </div>
+                    <div className="flex items-center gap-4 justify-center">
+                      <span className="transition-all ease-in px-2 py-1 hover:bg-tableRow hover:scale-125 rounded-full">
+                        
+                        <Modal children={<EditForm/>} />
+                      </span>
+                      <span className="transition-all ease-in px-2 py-1 hover:bg-tableRow hover:scale-125 rounded-full">
+                        <AlertModal id={product._id} />
+                      </span>
+                    </div>
                   </TableCell>
                 </TableRow>
               );
