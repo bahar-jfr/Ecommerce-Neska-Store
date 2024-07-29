@@ -26,6 +26,7 @@ export default function TableInventory() {
   const [editProducts, setEditProducts] = useState<Partial<IProduct>[]>([]);
   const [isEdit, SetIsEdit] = useState<Record<string, boolean | string>>({
     price: false,
+    discount:false,
     quantity: false,
   });
 
@@ -42,6 +43,7 @@ export default function TableInventory() {
         {
           quantity: editedProduct.quantity,
           price: editedProduct.price,
+          discount: editedProduct.discount,
           _id: editedProduct._id,
         },
       ]);
@@ -51,6 +53,7 @@ export default function TableInventory() {
       (temp[index] = {
         quantity: editedProduct.quantity,
         price: editedProduct.price,
+        discount: editedProduct.discount,
         _id: editedProduct._id,
       }),
         setEditProducts(temp);
@@ -108,6 +111,9 @@ export default function TableInventory() {
               <TableHead className="text-right text-primary font-bold w-1/4 rounded-tl-lg">
                 {pageLevelLocalization.inventory.inventory}
               </TableHead>
+              <TableHead className="text-right text-primary font-bold w-1/4 rounded-tl-lg">
+                {pageLevelLocalization.inventory.discount}
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -154,6 +160,21 @@ export default function TableInventory() {
                       />
                     ) : (
                       <span className="pr-2">{product.quantity}</span>
+                    )}
+                  </TableCell>
+                  <TableCell
+                    onClick={() =>
+                      SetIsEdit((prev) => ({ ...prev, discount: product._id }))
+                    }
+                  >
+                    {isEdit.discount === product?._id ? (
+                      <input
+                        className="rounded-md pr-2"
+                        defaultValue={product.discount}
+                        onBlur={(e) => handleBlur(e, product, "discount", index)}
+                      />
+                    ) : (
+                      <span className="pr-2">{product.discount}</span>
                     )}
                   </TableCell>
                 </TableRow>
