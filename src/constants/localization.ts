@@ -98,6 +98,7 @@ export const pageLevelLocalization = {
     delete:"تایید حذف",
     editProduct:"ویرایش محصول",
     success:"بروزرسانی با موفقیت انجام شد",
+    successAdd:"افزودن محصول با موفقیت انجام شد",
     errorAnotherName :"نام محصول تکراری می باشد",
    require: "الزامی است",
    quantity: "تعداد",

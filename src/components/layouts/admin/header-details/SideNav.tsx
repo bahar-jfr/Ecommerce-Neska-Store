@@ -41,38 +41,49 @@ export function SideNav() {
                   <ul className="flex flex-col gap-4 pr-4 pt-4">
                     <Link href={"/dashboard/product-data"}>
                       <li className="hover:text-primary-foreground hover:font-semibold">
-                       {pageLevelLocalization.adminLayout.productData}
+                        {pageLevelLocalization.adminLayout.productData}
                       </li>
                     </Link>
                     <Link href={"/dashboard/inventory-data"}>
                       <li className="hover:text-primary-foreground hover:font-semibold">
-                       {pageLevelLocalization.adminLayout.productInventory}
+                        {pageLevelLocalization.adminLayout.productInventory}
                       </li>
                     </Link>
                     <Link href={"/dashboard/delivary-data"}>
                       <li className="hover:text-primary-foreground hover:font-semibold">
-                      {pageLevelLocalization.adminLayout.ordersStatus}
+                        {pageLevelLocalization.adminLayout.ordersStatus}
                       </li>
                     </Link>
                   </ul>
                 </li>
                 <hr />
                 <li>
-                 {pageLevelLocalization.adminLayout.charts}
+                  {pageLevelLocalization.adminLayout.charts}
                   <ul className="flex flex-col gap-4 pr-4 pt-4">
                     <Link href={"/dashboard#LineChart"}>
                       <li className="hover:text-primary-foreground hover:font-semibold">
-                       {pageLevelLocalization.adminLayout.lineChart}
+                        {pageLevelLocalization.adminLayout.lineChart}
                       </li>
                     </Link>
                     <Link href={"/dashboard#BarChart"}>
                       <li className="hover:text-primary-foreground hover:font-semibold">
-                      {pageLevelLocalization.adminLayout.barChart}
+                        {pageLevelLocalization.adminLayout.barChart}
                       </li>
                     </Link>
                     <Link href={"/dashboard#PieChart"}>
                       <li className="hover:text-primary-foreground hover:font-semibold">
-                       {pageLevelLocalization.adminLayout.pieChart}
+                        {pageLevelLocalization.adminLayout.pieChart}
+                      </li>
+                    </Link>
+                  </ul>
+                </li>
+                <hr />
+                <li>
+                  {pageLevelLocalization.adminLayout.form}
+                  <ul className="flex flex-col gap-4 pr-4 pt-4">
+                    <Link href={"/dashboard/product-data/add-product"}>
+                      <li className="hover:text-primary-foreground hover:font-semibold">
+                        {pageLevelLocalization.adminLayout.addProduct}
                       </li>
                     </Link>
                   </ul>

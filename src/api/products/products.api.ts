@@ -3,14 +3,40 @@ import { toast } from "@/components/ui/use-toast";
 import { pageLevelLocalization } from "@/constants/localization";
 import { IAddProduct, IProduct } from "@/types";
 
+enum EToastVariant {
+  Success = "success",
+  Destructive = "destructive",
+  Default = "default",
+}
+
 export async function getProducts() {
   const res = await api.get("/products");
   return res.data;
 }
 
 export async function addProduct(data: IAddProduct) {
+  let toastItems = {
+    message: `${pageLevelLocalization.productsData.successAdd}`,
+    color: EToastVariant.Success,
+  };
+
   const res = await api.post("/products", data);
-  return res;
+
+  if (
+    res.data.status === "fail" &&
+    res.data.message ===
+      "product name is already exists. choose a different product name"
+  ) {
+    toastItems.message = `${pageLevelLocalization.productsData.errorAnotherName}`;
+    toastItems.color = EToastVariant.Destructive;
+  }
+
+  toast({
+    variant: `${toastItems.color}`,
+    title: toastItems.message,
+  });
+
+  return res.data;
 }
 
 export async function deleteProduct(id: string) {
@@ -30,12 +56,6 @@ export async function editProduct(
 ) {
   const { _id, ...rest } = product;
 
-  enum EToastVariant {
-    Success = "success",
-    Destructive = "destructive",
-    Default = "default",
-  }
-  
   let toastItems = {
     message: `${pageLevelLocalization.productsData.success}`,
     color: EToastVariant.Success,

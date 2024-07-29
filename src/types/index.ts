@@ -53,3 +53,15 @@ export interface ISubcategory {
     createdAt: string;
     updatedAt: string;
   }
+
+  export interface IAddProduct{
+    name: string;
+    brand: string;
+    price: number;
+    quantity: number;
+    discount: number;
+    description: string;
+    subcategory: string;
+    category: string;
+    images: FileList;
+  }
