@@ -46,6 +46,8 @@ export const pageLevelLocalization = {
     productData: "اطلاعات محصولات",
     productInventory : "موجودی محصولات",
     ordersStatus: "وضعیت سفارشات",
+    addProduct:"افزودن محصولات",
+    form:"فرم",
     charts:"نمودار ها",
     lineChart : "نمودار خطی",
     barChart :"نمودار میله ای",
@@ -80,6 +82,7 @@ export const pageLevelLocalization = {
   inventory:{
     manageInventory:"مدیریت موجودی و قیمت",
     inventory:"موجودی",
+    discount:" تخفیف",
     saveChanges: "ثبت تغییرات",
     success:"بروزرسانی با موفقیت انجام شد",
     error: "خطایی در بروزرسانی محصولات رخ داده است"
@@ -94,11 +97,15 @@ export const pageLevelLocalization = {
     cancel:"لغو",
     delete:"تایید حذف",
     editProduct:"ویرایش محصول",
+    success:"بروزرسانی با موفقیت انجام شد",
+    errorAnotherName :"نام محصول تکراری می باشد",
    require: "الزامی است",
    quantity: "تعداد",
    discount:"تخفیف",
    description:"توضیحات",
    choose: "را انتخاب کنید",
-   submit:"ذخیره"
+   submit:"ذخیره",
+   brand:"برند",
+   images:"عکس"
   },
 };

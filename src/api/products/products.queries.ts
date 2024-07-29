@@ -1,10 +1,40 @@
+import {
+  addProduct,
+  deleteProduct,
+  editMultiProduct,
+  editProduct,
+  getProducts,
+} from "@/api/products/products.api";
 import { useToast } from "@/components/ui/use-toast";
 import { pageLevelLocalization } from "@/constants/localization";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteProduct, editMultiProduct, getProducts } from "@/api/products/products.api";
 
 export function useGetProducts() {
   return useQuery({ queryKey: ["products"], queryFn: getProducts });
+}
+
+export function useAddProduct() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["addProduct"],
+    mutationFn: addProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+  });
+}
+
+export function useEditProduct() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["editProduct"],
+    mutationFn: editProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+
+    },
+ 
+  });
 }
 
 export function useDeleteProduct() {
@@ -12,11 +42,10 @@ export function useDeleteProduct() {
   return useMutation({
     mutationKey: ["deleteProduct"],
     mutationFn: deleteProduct,
-    onSuccess:()=>{
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
-    }
+    },
   });
-  
 }
 
 export function useEditMultiProduct() {

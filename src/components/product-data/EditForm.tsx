@@ -1,3 +1,5 @@
+import { useEditProduct } from "@/api/products/products.queries";
+import { SelectItems } from "@/components/product-data/Select";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -7,15 +9,25 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { productSchema } from "@/constants/formSchema";
+import { editProductSchema } from "@/constants/formSchema";
 import { localization, pageLevelLocalization } from "@/constants/localization";
+import { fromFormDataToObject } from "@/lib/utils";
+import { IProduct } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { SelectItems } from "@/components/product-data/Select";
 
-export default function EditForm() {
+export default function EditForm({ productData }: { productData: IProduct }) {
+  const [catId, setCatId] = useState(productData.category._id);
+  const { mutate } = useEditProduct();
   const form = useForm({
-    resolver: yupResolver(productSchema),
+    resolver: yupResolver(editProductSchema),
+    defaultValues: {
+      name: productData.name,
+      description: productData.description,
+      category: catId,
+      subcategory: productData.subcategory._id,
+    },
   });
   const {
     control,
@@ -25,24 +37,21 @@ export default function EditForm() {
 
   const onSubmit = async (data: {
     name: string;
-    price: number;
-    quantity: number;
-    discount: number;
     description: string;
     subcategory: string;
     category: string;
   }) => {
     const formData = new FormData();
 
+    formData.append("_id", productData._id);
     formData.append("name", data.name);
-    formData.append("price", `${data.price}`);
-    formData.append("discount", `${data.discount}`);
-    formData.append("quantity", `${data.quantity}`);
     formData.append("description", data.description);
-    formData.append("description", data.subcategory);
-    formData.append("description", data.category);
+    formData.append("subcategory", data.subcategory);
+    formData.append("category", data.category);
 
-    /*   await youreditfunction(formData) */
+    const productObject = fromFormDataToObject(formData);
+   mutate(productObject);
+
   };
 
   return (
@@ -60,56 +69,6 @@ export default function EditForm() {
             </FormItem>
           )}
         />
-        <div className="flex gap-5">
-          <FormField
-            control={control}
-            name="price"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormControl>
-                  <Input placeholder={localization.price} {...field} />
-                </FormControl>
-                {errors.price && (
-                  <FormMessage>{errors.price.message}</FormMessage>
-                )}
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={control}
-            name="quantity"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormControl>
-                  <Input
-                    placeholder={pageLevelLocalization.productsData.quantity}
-                    {...field}
-                  />
-                </FormControl>
-                {errors.quantity && (
-                  <FormMessage>{errors.quantity.message}</FormMessage>
-                )}
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={control}
-            name="discount"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormControl>
-                  <Input
-                    placeholder={pageLevelLocalization.productsData.discount}
-                    {...field}
-                  />
-                </FormControl>
-                {errors.discount && (
-                  <FormMessage>{errors.discount.message}</FormMessage>
-                )}
-              </FormItem>
-            )}
-          />
-        </div>
         <div className="flex gap-5 ">
           <FormField
             control={control}
@@ -120,6 +79,7 @@ export default function EditForm() {
                   <SelectItems
                     name="category"
                     control={field}
+                    setCatId={setCatId}
                     placeholder={`${localization.category}`}
                   />
                 </FormControl>
@@ -138,6 +98,7 @@ export default function EditForm() {
                   <SelectItems
                     name="subcategory"
                     control={field}
+                    catId={catId}
                     placeholder={`${localization.subcategory}`}
                   />
                 </FormControl>

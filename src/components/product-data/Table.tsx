@@ -17,6 +17,7 @@ import Modal from "@/components/product-data/Modal";
 import { localization, pageLevelLocalization } from "@/constants/localization";
 import { IProduct } from "@/types";
 import Image from "next/image";
+import Link from "next/link";
 import EditForm from "./EditForm";
 
 export default function TableProduct() {
@@ -26,12 +27,14 @@ export default function TableProduct() {
   return (
     <div className="flex flex-col gap-4 ">
       <div className="flex justify-end pb-4">
-        <Button
-          variant={"outline"}
-          className="border-2 border-primary bg-secondary shadow-md hover:bg-primary hover:text-secondary"
-        >
-          {pageLevelLocalization.productsData.addProduct}
-        </Button>
+        <Link href={"/dashboard/product-data/add-product"}>
+          <Button
+            variant={"outline"}
+            className="border-2 border-primary bg-secondary shadow-md hover:bg-primary hover:text-secondary"
+          >
+            {pageLevelLocalization.productsData.addProduct}
+          </Button>
+        </Link>
       </div>
       <div className="rounded-lg border shadow-lg">
         <Table className="bg-white text-md rounded-lg">
@@ -56,7 +59,7 @@ export default function TableProduct() {
               return (
                 <TableRow key={product._id}>
                   <TableCell className="font-medium flex items-center justify-center">
-                    <Image
+                    <Image 
                       src={`http://localhost:8000/${product?.images[0].replace(
                         "localhost:8000",
                         ""
@@ -73,8 +76,7 @@ export default function TableProduct() {
                   <TableCell className="text-center">
                     <div className="flex items-center gap-4 justify-center">
                       <span className="transition-all ease-in px-2 py-1 hover:bg-tableRow hover:scale-125 rounded-full">
-                        
-                        <Modal children={<EditForm/>} />
+                        <Modal children={<EditForm productData={product} />} />
                       </span>
                       <span className="transition-all ease-in px-2 py-1 hover:bg-tableRow hover:scale-125 rounded-full">
                         <AlertModal id={product._id} />
