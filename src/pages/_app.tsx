@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/toaster";
 import { localization, pageLevelLocalization } from "@/constants/localization";
 import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -14,6 +15,12 @@ const getTitle = (pathname: string) => {
       return ` ${pageLevelLocalization.auth.login} | ${pageLevelLocalization.auth.signup}`;
     case "/dashboard":
       return `${localization.adminPanel}`;
+    case "/dashboard/product-data":
+      return `${localization.adminPanel}`;
+    case "/dashboard/inventory-data":
+      return `${localization.adminPanel}`;
+    case "/dashboard/delivary-data":
+      return `${localization.adminPanel}`;
     default:
       return ` ${localization.store} ${localization.brand}`;
   }
@@ -27,8 +34,17 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-const queryClient = new QueryClient();
-
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      retry: false,
+      retryOnMount: false,
+      refetchInterval: false,
+    },
+  },
+});
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
@@ -41,7 +57,8 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <QueryClientProvider client={queryClient}>
-     { getLayout(<Component {...pageProps} />)}
+      {getLayout(<Component {...pageProps} />)}
+      <Toaster />
     </QueryClientProvider>
   );
 }

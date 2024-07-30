@@ -16,7 +16,7 @@
     --primary: 209 100% 30%;
     --primary-foreground: 209 100% 17%;
 
-    --secondary: 210 40% 96%;
+    --secondary: 210 40% 95%;
     --secondary-foreground: 210 40% 96%;
 
     --tertiary: 191 51% 28%;
@@ -30,6 +30,7 @@
 
     --success: 142 71% 45%;
     --success--foreground: 142 76% 36%;
+    --tableRow: 200 30% 80%;
 
     --chart-1: 191 51% 35%;
     --chart-2: 160 60% 55%;
@@ -45,6 +46,9 @@
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
+
+    --success: 125 95% 60%;
+    --success-foreground:210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
