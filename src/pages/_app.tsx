@@ -1,9 +1,10 @@
 import { localization, pageLevelLocalization } from "@/constants/localization";
 import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { ReactElement, ReactNode, useEffect } from "react";
 
 const getTitle = (pathname: string) => {
   switch (pathname) {
@@ -18,17 +19,29 @@ const getTitle = (pathname: string) => {
   }
 };
 
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
 const queryClient = new QueryClient();
 
-export default function App({ Component, pageProps }: AppProps) {
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page);
+
   const router = useRouter();
   useEffect(() => {
     const title = getTitle(router.pathname);
     document.title = title;
   }, [router.pathname]);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <Component {...pageProps} />
+     { getLayout(<Component {...pageProps} />)}
     </QueryClientProvider>
   );
 }
