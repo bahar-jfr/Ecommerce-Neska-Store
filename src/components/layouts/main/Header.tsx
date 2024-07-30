@@ -8,10 +8,10 @@ import { IoPersonSharp } from "react-icons/io5";
 
 export default function Header() {
   return (
-    <header className="flex flex-col bg-secondary text-primary font-bold px-4 fixed top-0 left-0 w-full">
+    <header className="flex flex-col bg-secondary text-primary font-bold px-4  top-0 left-0 w-full shadow-md ">
       <div className="flex items-center w-full justify-between px-8 py-4">
         <div className="flex items-center w-1/3 gap-4">
-          <Image priority src="/2.svg" alt="logo" width={130} height={500} />
+          <Image priority src="/logo.svg" alt="logo" width={130} height={500} />
           <Input placeholder="جستجو" type="text" />
         </div>
         <div className="flex items-center justify-end w-1/3 gap-4">

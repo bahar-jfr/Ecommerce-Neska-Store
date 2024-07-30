@@ -49,7 +49,9 @@ export const pageLevelLocalization = {
       send:"امکان ارسال سریع",
       return:"سه روز ضمانت بازگشت کالا",
       original:"ضمانت اصل بودن کالا",
-      support:"پشتیبانی 24 ساعته"
+      support:"پشتیبانی 24 ساعته",
+      viewersComments:"دیدگاه کاربران",
+      submitComment: "ثبت دیدگاه"
     },
   },
   footer: {
@@ -71,4 +73,10 @@ export const pageLevelLocalization = {
     pieChart: "نمودار دایره ای ",
     calendar: "تقویم",
   },
+  home:{
+    banner:{
+      nescafeTitle :"هوای خودت رو داشته باش ... ",
+      nescafe:"با نسکافه :)"
+    }
+  }
 };
