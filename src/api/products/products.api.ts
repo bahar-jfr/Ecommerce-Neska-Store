@@ -10,7 +10,12 @@ enum EToastVariant {
 }
 
 export async function getProducts() {
-  const res = await api.get("/products");
+  const res = await api.get(`/products`);
+  return res.data;
+}
+
+export async function getProductsByParams(params?:string) {
+  const res = await api.get(`/products${params}`);
   return res.data;
 }
 
@@ -34,12 +39,18 @@ export async function addProduct(data: IAddProduct) {
   ) {
     toastItems.message = `${pageLevelLocalization.productsData.errorAnotherName}`;
     toastItems.color = EToastVariant.Destructive;
+    toast({
+      variant: `${toastItems.color}`,
+      title: toastItems.message,
+    });
+  }else{
+    toast({
+      variant: `${toastItems.color}`,
+      title: toastItems.message,
+    });
   }
 
-  toast({
-    variant: `${toastItems.color}`,
-    title: toastItems.message,
-  });
+  
 
   return res.data;
 }

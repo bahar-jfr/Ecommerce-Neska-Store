@@ -3,25 +3,28 @@ import {
   deleteProduct,
   editMultiProduct,
   editProduct,
+  getProductById,
   getProducts,
-  getProductById
+  getProductsByParams,
 } from "@/api/products/products.api";
 import { useToast } from "@/components/ui/use-toast";
 import { pageLevelLocalization } from "@/constants/localization";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-
 export function useGetProductById(id: string) {
   return useQuery({
     queryKey: ["singleProduct"],
     queryFn: () => getProductById(id),
-  })}
-
-
-
+    enabled: !!id,
+  });
+}
 
 export function useGetProducts() {
   return useQuery({ queryKey: ["products"], queryFn: getProducts });
+}
+
+export function useGetProductsByParams(params?:string) {
+  return useQuery({ queryKey: ["products"], queryFn: ()=>getProductsByParams(params) });
 }
 
 export function useAddProduct() {
@@ -41,10 +44,8 @@ export function useEditProduct() {
     mutationKey: ["editProduct"],
     mutationFn: editProduct,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-
+      queryClient.invalidateQueries({ queryKey: ["singleProduct"] });
     },
- 
   });
 }
 
