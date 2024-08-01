@@ -1,6 +1,5 @@
 import { IProduct } from "@/types";
 import Image from "next/image";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "swiper/css";
 import "swiper/css/a11y";
 import "swiper/css/autoplay";
