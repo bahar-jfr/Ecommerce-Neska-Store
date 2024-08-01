@@ -48,7 +48,7 @@
     --destructive-foreground: 210 40% 98%;
 
     --success: 125 95% 60%;
-    --success-foreground:210 40% 98%;
+    --success-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
@@ -103,6 +103,14 @@
   }
 }
 
+.tooltip {
+  @apply invisible absolute;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
+}
+
 @font-face {
   font-family: "IRANSans";
   src: url("../assets/fonts/IRANSans(FaNum).ttf");
@@ -122,3 +130,9 @@
   position: relative;
   transition: margin-right 0.2s ease-out 0s;
 }
+.font-iransans {
+  /* add your styles here */
+  font-family: "IranSans", sans-serif;
+}
+
+
