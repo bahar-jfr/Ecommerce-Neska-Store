@@ -7,8 +7,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { localization, pageLevelLocalization } from "@/constants/localization";
+import { formatPrice } from "@/lib/utils";
 import { IProduct } from "@/types";
-import { formatPrice } from "@/utils/formats";
 import Image from "next/image";
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
@@ -25,7 +25,7 @@ export default function CardPreview({ data }: { data: IProduct }) {
     <Card className="h-full w-fit rounded-2xl px-6 py-10 shadow-md cursor-pointer hover:shadow-lg">
       <CardHeader>
         <CardTitle>
-          <div className="">
+          <div className="flex items-center justify-center">
             <Image
               src={`http://localhost:8000/${data?.images[0].replace(
                 "localhost:8000",

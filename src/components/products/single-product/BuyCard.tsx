@@ -8,8 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { localization, pageLevelLocalization } from "@/constants/localization";
+import { formatPrice } from "@/lib/utils";
 import { IProduct } from "@/types";
-import { formatPrice } from "@/utils/formats";
 import { FaRegHeart } from "react-icons/fa";
 import { GoShieldCheck } from "react-icons/go";
 

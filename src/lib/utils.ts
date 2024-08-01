@@ -15,3 +15,10 @@ export function fromFormDataToObject(formData: FormData): { [key: string]: strin
 
   return obj;
 }
+
+
+export function formatPrice(price: number) {
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 0,
+  }).format(price);
+}
