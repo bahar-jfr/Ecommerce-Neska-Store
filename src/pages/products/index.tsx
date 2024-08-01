@@ -4,10 +4,20 @@ import CardPreview from "@/components/products/card/CardPreview";
 import Error from "@/components/shared/Error";
 import Loading from "@/components/shared/Loading";
 import { IProduct } from "@/types";
+import { useSearchParams } from "next/navigation";
 import { ReactElement } from "react";
 
 export default function ProductsPage() {
-  const { data, error, isLoading } = useGetProducts();
+  const params = useSearchParams();
+  const brandParams = params.get("brand");
+  const categoryParams = params.get("category");
+
+  const { data, isLoading, error } = useGetProducts({
+    page: "",
+    brand: brandParams,
+    category: categoryParams,
+  });
+
   console.log(isLoading);
   if (error) {
     return <Error message={error.message} />;
@@ -18,13 +28,12 @@ export default function ProductsPage() {
 
   return (
     <div className="grid grid-cols-3 gap-12 justify-items-center px-36 py-12 ">
-      {data?.data.products.map((product: IProduct) => (
+      {data?.data?.products.map((product: IProduct) => (
         <CardPreview key={product._id} data={product} />
       ))}
     </div>
   );
 }
-
 
 ProductsPage.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
