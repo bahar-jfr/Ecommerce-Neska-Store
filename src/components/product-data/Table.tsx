@@ -21,7 +21,7 @@ import Link from "next/link";
 import EditForm from "./EditForm";
 
 export default function TableProduct() {
-  const { data } = useGetProducts();
+  const { data } = useGetProducts({ page: "" });
   const { mutate } = useDeleteProduct();
 
   return (
@@ -59,7 +59,7 @@ export default function TableProduct() {
               return (
                 <TableRow key={product._id}>
                   <TableCell className="font-medium flex items-center justify-center">
-                    <Image 
+                    <Image
                       src={`http://localhost:8000/${product?.images[0].replace(
                         "localhost:8000",
                         ""

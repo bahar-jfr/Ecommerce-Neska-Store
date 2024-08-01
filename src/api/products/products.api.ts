@@ -1,7 +1,7 @@
 import { api } from "@/api/api.config";
 import { toast } from "@/components/ui/use-toast";
 import { pageLevelLocalization } from "@/constants/localization";
-import { IAddProduct, IProduct } from "@/types";
+import { IAddProduct, IParams, IProduct } from "@/types";
 
 enum EToastVariant {
   Success = "success",
@@ -9,20 +9,36 @@ enum EToastVariant {
   Default = "default",
 }
 
-export async function getProducts() {
-  const res = await api.get(`/products`);
+
+
+export async function getProducts(params?:IParams) {
+  const paramsObject: any = {};
+
+  if (params?.limit) paramsObject.page = params.limit;
+  if (params?.page) paramsObject.page = params.page;
+  if (params?.brand) paramsObject.brand = params.brand;
+  if (params?.category) paramsObject.category = params.category;
+  if (params?.subcategory) paramsObject.subcategory = params.subcategory;
+  if (params?.discount) paramsObject.discount = { ["gte"]: params.discount };
+  if (params?.minPrice)
+    paramsObject.price = { ...paramsObject.price, ["gte"]: params.minPrice };
+  if (params?.maxPrice)
+    paramsObject.price = { ...paramsObject.price, ["lt"]: params.maxPrice };
+  if (params?.sort) paramsObject.sort = params.sort;
+
+  const res = await api.get(`/products`, { params: paramsObject });
   return res.data;
 }
 
-export async function getProductsByParams(params?:string) {
+export async function getProductsByParams(params?: string) {
   const res = await api.get(`/products${params}`);
   return res.data;
 }
 
 export async function getProductById(id: string) {
   const res = await api.get(`/products/${id}`);
-  return res.data}
-
+  return res.data;
+}
 
 export async function addProduct(data: IAddProduct) {
   let toastItems = {
@@ -43,14 +59,12 @@ export async function addProduct(data: IAddProduct) {
       variant: `${toastItems.color}`,
       title: toastItems.message,
     });
-  }else{
+  } else {
     toast({
       variant: `${toastItems.color}`,
       title: toastItems.message,
     });
   }
-
-  
 
   return res.data;
 }

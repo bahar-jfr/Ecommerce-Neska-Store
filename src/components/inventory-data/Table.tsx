@@ -19,14 +19,14 @@ import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function TableInventory() {
-  const { data, isLoading } = useGetProducts();
+  const { data, isLoading } = useGetProducts({ page: "" });
   const { mutate, isPending } = useEditMultiProduct();
 
   const [products, setProducts] = useState<IProduct[]>([]);
   const [editProducts, setEditProducts] = useState<Partial<IProduct>[]>([]);
   const [isEdit, SetIsEdit] = useState<Record<string, boolean | string>>({
     price: false,
-    discount:false,
+    discount: false,
     quantity: false,
   });
 
@@ -65,7 +65,6 @@ export default function TableInventory() {
     setEditProducts([]);
   };
 
-  
   const handleBlur = (
     e: React.FocusEvent<HTMLInputElement>,
     product: IProduct,
@@ -171,7 +170,9 @@ export default function TableInventory() {
                       <input
                         className="rounded-md pr-2"
                         defaultValue={product.discount}
-                        onBlur={(e) => handleBlur(e, product, "discount", index)}
+                        onBlur={(e) =>
+                          handleBlur(e, product, "discount", index)
+                        }
                       />
                     ) : (
                       <span className="pr-2">{product.discount}</span>

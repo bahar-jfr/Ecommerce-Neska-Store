@@ -1,4 +1,5 @@
-import { useGetProductsByParams } from "@/api/products/products.queries";
+import { useGetProducts } from "@/api/products/products.queries";
+import DiscountCard from "@/components/home/card/DiscountCard";
 import { pageLevelLocalization } from "@/constants/localization";
 import { IProduct } from "@/types";
 import { MdDiscount } from "react-icons/md";
@@ -15,10 +16,9 @@ import {
   Scrollbar,
 } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import DiscountCard from "@/components/home/card/DiscountCard";
 
 export default function DiscountProduct() {
-  const { data: products } = useGetProductsByParams("?discount[gt]=0");
+  const { data: products } = useGetProducts({ discount: 1 });
   return (
     <div className=" px-12 pb-10 flex flex-col gap-8 ">
       <div className="flex items-center gap-3 text-attention font-bold text-4xl">
@@ -35,7 +35,7 @@ export default function DiscountProduct() {
         scrollbar={{ draggable: true }}
         className="custom-swiper w-full bg-attention rounded-2xl  "
       >
-        {products?.data.products.map((product: IProduct) => {
+        {products?.data?.products.map((product: IProduct) => {
           return (
             <SwiperSlide className="p-8">
               <DiscountCard key={product._id} data={product} />
