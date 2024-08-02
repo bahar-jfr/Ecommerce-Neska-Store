@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getSubcategories } from "@/api/subcategory/subcategory.api";
 
-export function useGetSubcategories(){
+export function useGetSubcategories(catId?:string){
     return useQuery({
-        queryKey:["subcategories"],
-        queryFn: getSubcategories
+        queryKey:["subcategories",catId],
+        queryFn: ()=>getSubcategories(catId)
     })
 }
