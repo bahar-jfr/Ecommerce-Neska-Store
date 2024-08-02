@@ -34,9 +34,9 @@ export const addProductSchema = yup.object().shape({
     ),
     images: yup
     .mixed<FileList>()
-    .required(
+  /*   .required(
       `${pageLevelLocalization.productsData.images} ${pageLevelLocalization.productsData.choose}`
-    ),
+    ) */,
   category: yup
     .string()
     .required(
@@ -57,6 +57,8 @@ export const editProductSchema = yup.object().shape({
     .required(
       `${localization.productName} ${pageLevelLocalization.productsData.require}`
     ),
+    images: yup
+    .mixed<FileList>(),
   description: yup
     .string()
     .required(

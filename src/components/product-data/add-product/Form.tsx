@@ -11,14 +11,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { addProductSchema } from "@/constants/formSchema";
 import { localization, pageLevelLocalization } from "@/constants/localization";
+import { IAddProduct } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function AddProductForm() {
   const [catId, setCatId] = useState("");
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<FileList>();
   const { mutate } = useAddProduct();
+ /*  let fileList: File[] = []; */
+
   const form = useForm({
     resolver: yupResolver(addProductSchema),
   });
@@ -37,7 +40,7 @@ export default function AddProductForm() {
     description: string;
     subcategory: string;
     category: string;
-    images: FileList;
+    images?: FileList;
   }) => {
     const formData = new FormData();
 
@@ -50,18 +53,42 @@ export default function AddProductForm() {
     formData.append("subcategory", data.subcategory);
     formData.append("category", data.category);
 
-    Array.from(data.images).forEach((file) => {
-      console.log(file);
-      formData.append("images", file, file.name);
-    });
+
+    if (images) {
+      console.log(images)
+      for (let i = 0; i < images.length; i++) {
+        formData.append(`images`, images[i]);
+ /*        fileList.push(images[i]); */
+      }
+    }
+
+ /*    const addProductData: IAddProduct = {
+      name: formData.get("name") as string,
+      brand: formData.get("brand") as string,
+      price: Number(formData.get("price")),
+      quantity: Number(formData.get("quantity")),
+      discount: Number(formData.get("discount")),
+      description: formData.get("description") as string,
+      subcategory: formData.get("subcategory") as string,
+      category: formData.get("category") as string,
+      images: filelist,
+    }; */
+
     mutate(formData);
+  };
+
+  const handleImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+if(e.target.files != null){
+  setImages(e.target.files);
+}
+   
   };
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 border-2 border-primary shadow-inner rounded-lg p-8 "
+        className="space-y-12 border-2 border-primary shadow-inner rounded-lg p-8 "
       >
         <div className="flex gap-3">
           <FormField
@@ -71,7 +98,7 @@ export default function AddProductForm() {
               <FormItem className="w-2/3">
                 <FormControl>
                   <Input
-                  className="shadow-md"
+                    className="shadow-md"
                     placeholder={`${localization.productName}`}
                     {...field}
                   />
@@ -88,7 +115,8 @@ export default function AddProductForm() {
             render={({ field }) => (
               <FormItem className="w-1/3 pr-2.5">
                 <FormControl>
-                  <Input className="shadow-md"
+                  <Input
+                    className="shadow-md"
                     placeholder={`${pageLevelLocalization.productsData.brand}`}
                     {...field}
                   />
@@ -107,7 +135,11 @@ export default function AddProductForm() {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
-                  <Input className="shadow-md" placeholder={localization.price} {...field} />
+                  <Input
+                    className="shadow-md"
+                    placeholder={localization.price}
+                    {...field}
+                  />
                 </FormControl>
                 {errors.price && (
                   <FormMessage>{errors.price.message}</FormMessage>
@@ -121,7 +153,8 @@ export default function AddProductForm() {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
-                  <Input className="shadow-md"
+                  <Input
+                    className="shadow-md"
                     placeholder={pageLevelLocalization.productsData.quantity}
                     {...field}
                   />
@@ -138,7 +171,8 @@ export default function AddProductForm() {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
-                  <Input className="shadow-md"
+                  <Input
+                    className="shadow-md"
                     placeholder={pageLevelLocalization.productsData.discount}
                     {...field}
                   />
@@ -198,7 +232,8 @@ export default function AddProductForm() {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
-                  <Input className="shadow-md"
+                  <Input
+                    className="shadow-md"
                     placeholder={pageLevelLocalization.productsData.description}
                     {...field}
                   />
@@ -215,7 +250,14 @@ export default function AddProductForm() {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
-                  <Input className="shadow-md" type="file" multiple {...field} />
+                  <Input
+                    className="shadow-md"
+                    type="file"
+                    multiple
+                    {...field}
+                    onChange={handleImages}
+                    value={undefined} 
+                  />
                 </FormControl>
                 {errors.images && (
                   <FormMessage>{errors.images.message}</FormMessage>

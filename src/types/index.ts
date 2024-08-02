@@ -76,5 +76,5 @@ export interface IAddProduct {
   description: string;
   subcategory: string;
   category: string;
-  images: FileList;
+  images?: FileList ;
 }
