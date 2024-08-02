@@ -14,7 +14,7 @@ enum EToastVariant {
 export async function getProducts(params?:IParams) {
   const paramsObject: any = {};
 
-  if (params?.limit) paramsObject.page = params.limit;
+  if (params?.limit) paramsObject.limit = params.limit;
   if (params?.page) paramsObject.page = params.page;
   if (params?.brand) paramsObject.brand = params.brand;
   if (params?.category) paramsObject.category = params.category;

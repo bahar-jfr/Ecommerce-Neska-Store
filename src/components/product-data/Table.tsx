@@ -18,11 +18,24 @@ import { localization, pageLevelLocalization } from "@/constants/localization";
 import { IProduct } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import EditForm from "./EditForm";
 
 export default function TableProduct() {
-  const { data } = useGetProducts({ page: "" });
+  const [page, setPage] = useState(1);
+  const { data, refetch } = useGetProducts({ page: page, limit: 3 });
+  const [totalPage, setTotalPage] = useState(data?.total_pages);
   const { mutate } = useDeleteProduct();
+
+  const handlePrev = () => {
+    setPage((prev) => Math.max(prev - 1, 1));
+    refetch();
+  };
+
+  const handleNext = () => {
+    setPage((prev) => Math.min(prev + 1, totalPage));
+    refetch();
+  };
 
   return (
     <div className="flex flex-col gap-4 ">
@@ -40,7 +53,10 @@ export default function TableProduct() {
         <Table className="bg-white text-md rounded-lg">
           <TableHeader className="bg-primary  rounded-t-lg  ">
             <TableRow className="hover:bg-primary">
-              <TableHead className="text-center w-1/4 text-white rounded-tr-lg">
+            <TableHead className="text-center  text-white rounded-tr-lg">
+                {pageLevelLocalization.productsData.productNum}
+              </TableHead>
+              <TableHead className="text-center w-1/4 text-white ">
                 {pageLevelLocalization.productsData.productPhoto}
               </TableHead>
               <TableHead className="text-center w-1/4 text-white">
@@ -55,9 +71,10 @@ export default function TableProduct() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.data.products.map((product: IProduct) => {
+            {data?.data.products.map((product: IProduct,index:number) => {
               return (
                 <TableRow key={product._id}>
+                  <TableCell className="text-center">{index}</TableCell>
                   <TableCell className="font-medium flex items-center justify-center">
                     <Image
                       src={`http://localhost:8000/${product?.images[0].replace(
@@ -90,11 +107,11 @@ export default function TableProduct() {
         </Table>
       </div>
       <div className="flex items-center gap-2">
-        <Button size="sm" className="text-secondary">
+        <Button size="sm" className="text-secondary" onClick={handleNext}>
           &lt;&lt;
         </Button>
-        <span>1</span>
-        <Button size="sm" className="text-secondary">
+        <span>{page}</span>
+        <Button size="sm" className="text-secondary" onClick={handlePrev}>
           &gt;&gt;
         </Button>
       </div>

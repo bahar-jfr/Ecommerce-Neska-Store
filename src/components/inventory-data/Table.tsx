@@ -17,11 +17,19 @@ import { localization, pageLevelLocalization } from "@/constants/localization";
 import { IProduct } from "@/types";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
 
 export default function TableInventory() {
-  const { data, isLoading } = useGetProducts({ page: "" });
+  const [page, setPage] = useState(1);
+  const [sort, setSort] = useState("");
+  const { data, refetch } = useGetProducts({
+    page: page,
+    limit: 3,
+    sort: sort,
+  });
+  const [totalPage, setTotalPage] = useState(data?.total_pages);
   const { mutate, isPending } = useEditMultiProduct();
-
+  console.log(data);
   const [products, setProducts] = useState<IProduct[]>([]);
   const [editProducts, setEditProducts] = useState<Partial<IProduct>[]>([]);
   const [isEdit, SetIsEdit] = useState<Record<string, boolean | string>>({
@@ -33,6 +41,11 @@ export default function TableInventory() {
   useEffect(() => {
     setProducts(data?.data?.products);
   }, [data]);
+
+  useEffect(() => {
+    setTotalPage(data?.total_pages);
+    data;
+  }, [data, page]);
 
   const editHandler = (editedProduct: IProduct) => {
     const finded = editProducts.find((item) => item._id === editedProduct._id);
@@ -78,6 +91,14 @@ export default function TableInventory() {
     editHandler(temp[index]);
   };
 
+  const handlePrev = () => {
+    setPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNext = () => {
+    setPage((prev) => Math.min(prev + 1, totalPage));
+  };
+
   /*   if (isLoading) {
     return <Loading />;
   } */
@@ -100,15 +121,16 @@ export default function TableInventory() {
       <div className="rounded-lg border border-tableRow shadow-lg text-primary-foreground">
         <Table className="bg-white text-md rounded-lg ">
           <TableHeader className="rounded-t-lg ">
-            <TableRow className="hover:bg-white">
+            <TableRow className="hover:bg-white ">
               <TableHead className="text-right text-primary font-bold  w-1/4 rounded-tr-lg">
                 {localization.productName}{" "}
               </TableHead>
-              <TableHead className="text-right text-primary font-bold w-1/4">
-                {localization.price}
+              <TableHead className="  text-right text-primary font-bold w-1/4">
+                <span className="flex items-center gap-3"> {localization.price} <IoIosArrowDown onClick={() => setSort("price")}/></span>
               </TableHead>
-              <TableHead className="text-right text-primary font-bold w-1/4 rounded-tl-lg">
-                {pageLevelLocalization.inventory.inventory}
+              <TableHead className=" flex justify-center gap-2 items-center text-right text-primary font-bold w-1/4 rounded-tl-lg">
+                <span className="flex items-center gap-3"> {pageLevelLocalization.inventory.inventory} <IoIosArrowDown  onClick={() => setSort("quantity")}/></span>
+              
               </TableHead>
               <TableHead className="text-right text-primary font-bold w-1/4 rounded-tl-lg">
                 {pageLevelLocalization.inventory.discount}
@@ -184,6 +206,15 @@ export default function TableInventory() {
           </TableBody>
           <TableFooter className="h-2"></TableFooter>
         </Table>
+      </div>
+      <div className="flex items-center gap-2 pt-8">
+        <Button size={"sm"} onClick={handleNext}>
+          &lt;&lt;
+        </Button>
+        <span>{page}</span>
+        <Button size={"sm"} onClick={handlePrev}>
+          &gt;&gt;
+        </Button>
       </div>
     </div>
   );
