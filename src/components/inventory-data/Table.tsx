@@ -211,7 +211,7 @@ export default function TableInventory() {
         <Button size={"sm"} onClick={handleNext}>
           &lt;&lt;
         </Button>
-        <span>{page}</span>
+        <span>صفحه {page} از {totalPage}</span>
         <Button size={"sm"} onClick={handlePrev}>
           &gt;&gt;
         </Button>
