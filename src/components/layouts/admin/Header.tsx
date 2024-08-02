@@ -8,21 +8,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { localization, pageLevelLocalization } from "@/constants/localization";
+import { hasCookie } from "cookies-next";
+import Link from "next/link";
 import { IoPersonSharp } from "react-icons/io5";
 
 export function Header() {
+  const accessToken = hasCookie("accessToken")
   return (
     <header className="flex items-center w-full justify-between px-10 py-6 relative">
       <div className="flex items-center w-1/2 gap-4 ">
         <SideNav />
-
-        <input
-          placeholder="جستجو"
-          type="text"
-          className="w-1/2 p-2 rounded-md outline-none bg-gray-100"
-        />
       </div>
-      <div className="flex items-center justify-end w-1/3 gap-4">
+      <div className="text-primary-foreground flex items-center justify-end w-1/3 gap-4">
         <DropdownMenu>
           <DropdownMenuTrigger className="outline-none text-primary-foreground">
             {" "}
@@ -32,10 +30,18 @@ export function Header() {
               </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="ml-4">
-            <DropdownMenuLabel>اسم و ایمیل شخص</DropdownMenuLabel>
+          <DropdownMenuContent className="ml-4 text-primary-foreground ">
+            <DropdownMenuLabel className="flex flex-row-reverse">اسم و ایمیل شخص</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>خروج</DropdownMenuItem>
+            <DropdownMenuItem className="flex flex-row-reverse">
+              {" "}
+              <Link href={"/"}>
+                <p className="text-sm ">{localization.mainPage}</p>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="flex flex-row-reverse">
+              {accessToken ? `${pageLevelLocalization.auth.logout}`: `${pageLevelLocalization.auth.login}`}
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

@@ -49,7 +49,7 @@ export default function Header() {
           </div>
           <DropdownMenu dir="rtl">
             <DropdownMenuTrigger asChild>
-              <Avatar>
+              <Avatar className="cursor-pointer">
                 <AvatarFallback className="bg-slate-200 hover:bg-slate-300 ">
                   <IoPersonSharp />
                 </AvatarFallback>
