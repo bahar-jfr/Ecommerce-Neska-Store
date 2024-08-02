@@ -33,6 +33,10 @@ export const pageLevelLocalization = {
   },
   products: {
     nonexistent: "ناموجود",
+    maxPrice: "بیشترین قیمت",
+    minPrice: "کمترین قیمت",
+    filter: "فیلتر",
+    deleteFilter: "حذف فیلتر ها",
     singleProduct: {
       productImageOf: "عکس محصول شماره",
       buyer: "خریدار",
@@ -60,6 +64,7 @@ export const pageLevelLocalization = {
       user: "کاربر",
       submitScore: "شما هم برای این کالا امتیاز ثبت کنید",
       scoreQuestion: "به این محصول چه امتیازی میدهید؟",
+      relateProducts: "محصولات مرتبط",
     },
   },
   footer: {
@@ -162,6 +167,6 @@ export const pageLevelLocalization = {
     submit: "ذخیره",
     brand: "برند",
     images: "عکس",
-    productNum:"شماره"
+    productNum: "شماره",
   },
 };
