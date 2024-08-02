@@ -162,5 +162,6 @@ export const pageLevelLocalization = {
     submit: "ذخیره",
     brand: "برند",
     images: "عکس",
+    productNum:"شماره"
   },
 };
