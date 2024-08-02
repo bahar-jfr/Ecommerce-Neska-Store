@@ -36,7 +36,7 @@ const chartConfig = {
 
 export function LineChartMultiple() {
   return (
-    <Card className="w-1/2 text-primary-foreground" id="LineChart">
+    <Card className="w-1/2 text-primary-foreground p-8" id="LineChart">
       <CardHeader>
         <CardTitle>{pageLevelLocalization.dashboard.cost} - {pageLevelLocalization.dashboard.income} </CardTitle>
         <CardDescription>{pageLevelLocalization.dashboard.tir} - {pageLevelLocalization.dashboard.mordad} 1403</CardDescription>

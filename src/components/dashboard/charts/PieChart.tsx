@@ -57,7 +57,7 @@ export function PieChartDonut() {
   }, []);
 
   return (
-    <Card className="flex flex-col w-1/2 text-primary-foreground" id="PieChart">
+    <Card className="flex flex-col w-1/2 text-primary-foreground p-8" id="PieChart">
       <CardHeader className="items-center pb-0">
         <CardTitle>  {pageLevelLocalization.dashboard.statistics} - {pageLevelLocalization.dashboard.browsers} </CardTitle>
         <CardDescription>{pageLevelLocalization.dashboard.tir} - {pageLevelLocalization.dashboard.mordad} 1403</CardDescription>

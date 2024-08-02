@@ -35,7 +35,7 @@ const chartConfig = {
 
 export function BarChartSingle() {
   return (
-    <Card className="w-1/2 text-primary-foreground" id="BarChart">
+    <Card className="w-1/2 text-primary-foreground p-8" id="BarChart">
       <CardHeader>
         <CardTitle>{pageLevelLocalization.dashboard.salesAmount} 
       
