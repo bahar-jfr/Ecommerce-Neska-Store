@@ -11,7 +11,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { addProductSchema } from "@/constants/formSchema";
 import { localization, pageLevelLocalization } from "@/constants/localization";
-import { IAddProduct } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -20,7 +19,7 @@ export default function AddProductForm() {
   const [catId, setCatId] = useState("");
   const [images, setImages] = useState<FileList>();
   const { mutate } = useAddProduct();
- /*  let fileList: File[] = []; */
+  /*  let fileList: File[] = []; */
 
   const form = useForm({
     resolver: yupResolver(addProductSchema),
@@ -53,16 +52,14 @@ export default function AddProductForm() {
     formData.append("subcategory", data.subcategory);
     formData.append("category", data.category);
 
-
     if (images) {
-      console.log(images)
       for (let i = 0; i < images.length; i++) {
         formData.append(`images`, images[i]);
- /*        fileList.push(images[i]); */
+       
       }
     }
 
- /*    const addProductData: IAddProduct = {
+    /*    const addProductData: IAddProduct = {
       name: formData.get("name") as string,
       brand: formData.get("brand") as string,
       price: Number(formData.get("price")),
@@ -73,21 +70,20 @@ export default function AddProductForm() {
       category: formData.get("category") as string,
       images: filelist,
     }; */
-
+ 
     mutate(formData);
   };
 
   const handleImages = (e: React.ChangeEvent<HTMLInputElement>) => {
-if(e.target.files != null){
-  setImages(e.target.files);
-}
-   
+    if (e.target.files != null) {
+      setImages(e.target.files);
+    }
   };
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         className="space-y-12 border-2 border-primary shadow-inner rounded-lg p-8 "
       >
         <div className="flex gap-3">
@@ -256,7 +252,7 @@ if(e.target.files != null){
                     multiple
                     {...field}
                     onChange={handleImages}
-                    value={undefined} 
+                    value={undefined}
                   />
                 </FormControl>
                 {errors.images && (

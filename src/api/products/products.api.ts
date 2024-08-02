@@ -11,7 +11,7 @@ enum EToastVariant {
 
 
 
-export async function getProducts(params?:IParams) {
+export async function getProducts(params?: IParams) {
   const paramsObject: any = {};
 
   if (params?.limit) paramsObject.limit = params.limit;
@@ -40,7 +40,7 @@ export async function getProductById(id: string) {
   return res.data;
 }
 
-export async function addProduct(data: IAddProduct) {
+export async function addProduct(data: any) {
   let toastItems = {
     message: `${pageLevelLocalization.productsData.successAdd}`,
     color: EToastVariant.Success,
@@ -73,6 +73,12 @@ export async function deleteProduct(id: string) {
   return api.delete(`/products/${id}`);
 }
 
+export async function editProductImage({id,data}:{id:string,data?:any}) {
+  console.log(id)
+  const res = await api.patch(`/products/${id}`, data);
+  return res.data;
+}
+
 export async function editProduct(
   product:
     | Partial<IProduct>
@@ -82,6 +88,7 @@ export async function editProduct(
         description: string;
         subcategory: string;
         category: string;
+        images?: FileList;
       }
 ) {
   const { _id, ...rest } = product;

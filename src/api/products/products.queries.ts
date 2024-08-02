@@ -3,26 +3,29 @@ import {
   deleteProduct,
   editMultiProduct,
   editProduct,
+  editProductImage,
   getProductById,
   getProducts,
   getProductsByParams,
 } from "@/api/products/products.api";
 import { useToast } from "@/components/ui/use-toast";
 import { pageLevelLocalization } from "@/constants/localization";
-import { IParams } from "@/types";
+import { IAddProduct, IParams } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useGetProductById(id: string) {
   return useQuery({
-    queryKey: ["singleProduct"],
+    queryKey: ["singleProduct", id],
     queryFn: () => getProductById(id),
     enabled: !!id,
   });
 }
 
-
-export function useGetProducts(params?:IParams) {
-  return useQuery({ queryKey: ["products",params], queryFn:()=> getProducts(params) });
+export function useGetProducts(params?: IParams) {
+  return useQuery({
+    queryKey: ["products", params],
+    queryFn: () => getProducts(params),
+  });
 }
 
 export function useGetProductsByParams(params?: string) {
@@ -37,6 +40,17 @@ export function useAddProduct() {
   return useMutation({
     mutationKey: ["addProduct"],
     mutationFn: addProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+  });
+}
+
+export function useEditProductImage() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["editProductImage"],
+    mutationFn: editProductImage,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },

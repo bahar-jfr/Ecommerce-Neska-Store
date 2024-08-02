@@ -39,15 +39,15 @@ export const addProductSchema = yup.object().shape({
     ) */,
   category: yup
     .string()
-    .required(
+  .required(
       `${localization.category} ${pageLevelLocalization.productsData.choose}`
-    )
+    ) 
     .label("Category"),
   subcategory: yup
     .string()
     .required(
       `${localization.subcategory} ${pageLevelLocalization.productsData.choose}`
-    )
+    ) 
     .label("Subcategory"),
 });
 

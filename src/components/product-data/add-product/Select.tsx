@@ -49,6 +49,7 @@ export function SelectItems({
         if (name === "category" && setCatId) {
           setCatId(value);
         }
+        control.onChange(value);
       }}
     >
       <SelectTrigger>
@@ -62,7 +63,7 @@ export function SelectItems({
               </SelectItem>
             ))
           : subcategories
-             /*  ?.filter(
+              /*  ?.filter(
                 (subcategory: ISubcategory) => subcategory.category === catId
               ) */
               ?.map((subcategory: ISubcategory) => (

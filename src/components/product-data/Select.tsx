@@ -33,7 +33,7 @@ export function SelectItems({
   catId,
 }: ISelectItems) {
   const { data: categories } = useGetCategories();
-  const { data: subcategories } = useGetSubcategories();
+  const { data: subcategories } = useGetSubcategories(catId);
 
   return (
     <Select
@@ -57,10 +57,10 @@ export function SelectItems({
               </SelectItem>
             ))
           : subcategories
-              ?.filter(
+             /*  ?.filter(
                 (subcategory: ISubcategory) => subcategory.category === catId
-              )
-              .map((subcategory: ISubcategory) => (
+              ) */
+              ?.map((subcategory: ISubcategory) => (
                 <SelectItem key={subcategory._id} value={subcategory._id}>
                   {subcategory.name}
                 </SelectItem>

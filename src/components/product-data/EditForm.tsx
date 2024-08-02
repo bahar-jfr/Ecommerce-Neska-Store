@@ -1,4 +1,4 @@
-import { useEditProduct } from "@/api/products/products.queries";
+import { useEditProductImage } from "@/api/products/products.queries";
 import { SelectItems } from "@/components/product-data/Select";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,15 +11,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { editProductSchema } from "@/constants/formSchema";
 import { localization, pageLevelLocalization } from "@/constants/localization";
-import { fromFormDataToObject } from "@/lib/utils";
 import { IProduct } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function EditForm({ productData }: { productData: IProduct }) {
   const [catId, setCatId] = useState(productData.category._id);
-  const { mutate } = useEditProduct();
+  const [images, setImages] = useState<FileList>();
+  const { mutate } = useEditProductImage();
+  const router = useRouter();
+
   const form = useForm({
     resolver: yupResolver(editProductSchema),
     defaultValues: {
@@ -29,6 +32,7 @@ export default function EditForm({ productData }: { productData: IProduct }) {
       subcategory: productData.subcategory._id,
     },
   });
+
   const {
     control,
     handleSubmit,
@@ -40,18 +44,28 @@ export default function EditForm({ productData }: { productData: IProduct }) {
     description: string;
     subcategory: string;
     category: string;
+    images?: FileList;
   }) => {
     const formData = new FormData();
 
-    formData.append("_id", productData._id);
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("subcategory", data.subcategory);
     formData.append("category", data.category);
 
-    const productObject = fromFormDataToObject(formData);
-   mutate(productObject);
-
+    if (images && images.length > 0) {
+      for (let i = 0; i < images.length; i++) {
+        formData.append(`images`, images[i]);
+      }
+    }
+    console.log(productData._id);
+    mutate({ id: productData._id, data: formData });
+  };
+  const handleImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files != null) {
+      setImages(e.target.files);
+      console.log(images);
+    }
   };
 
   return (
@@ -126,6 +140,25 @@ export default function EditForm({ productData }: { productData: IProduct }) {
             </FormItem>
           )}
         />
+        <FormField
+          control={control}
+          name="images"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormControl>
+                <Input
+                  className="shadow-md"
+                  type="file"
+                  multiple
+                  {...field}
+                  onChange={handleImages}
+                  value={undefined}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
         <Button type="submit" className="text-white">
           {pageLevelLocalization.productsData.submit}
         </Button>

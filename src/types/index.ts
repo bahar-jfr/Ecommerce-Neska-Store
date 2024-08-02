@@ -21,8 +21,8 @@ export interface IParams {
   maxPrice?: string;
   brand?: string | null;
   category?: string |null;
-  subcategory?: string;
-  sort?:string
+  subcategory?: string |null;
+  sort?:string | null 
 }
 
 export interface ICategory {
