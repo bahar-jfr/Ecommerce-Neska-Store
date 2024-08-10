@@ -55,7 +55,6 @@ export default function AddProductForm() {
     if (images) {
       for (let i = 0; i < images.length; i++) {
         formData.append(`images`, images[i]);
-       
       }
     }
 
@@ -70,7 +69,7 @@ export default function AddProductForm() {
       category: formData.get("category") as string,
       images: filelist,
     }; */
- 
+
     mutate(formData);
   };
 
@@ -84,7 +83,7 @@ export default function AddProductForm() {
     <Form {...form}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-12 border-2 border-primary shadow-inner rounded-lg p-8 "
+        className="bg-white space-y-12 border-2  shadow-inner rounded-lg p-8 "
       >
         <div className="flex gap-3">
           <FormField

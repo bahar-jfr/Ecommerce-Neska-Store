@@ -14,7 +14,7 @@ import {
   Scrollbar,
 } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import CardPreview from "../card/CardPreview";
+import CardPreview from "@/components/products/card/CardPreview";
 
 export default function RelateProducts({
   catId,

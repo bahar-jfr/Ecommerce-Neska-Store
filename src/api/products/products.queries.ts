@@ -10,7 +10,7 @@ import {
 } from "@/api/products/products.api";
 import { useToast } from "@/components/ui/use-toast";
 import { pageLevelLocalization } from "@/constants/localization";
-import { IAddProduct, IParams } from "@/types";
+import { IParams } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useGetProductById(id: string) {

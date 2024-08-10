@@ -58,13 +58,11 @@ export default function EditForm({ productData }: { productData: IProduct }) {
         formData.append(`images`, images[i]);
       }
     }
-    console.log(productData._id);
     mutate({ id: productData._id, data: formData });
   };
   const handleImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files != null) {
       setImages(e.target.files);
-      console.log(images);
     }
   };
 

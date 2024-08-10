@@ -1,15 +1,15 @@
 import { useEditProduct } from "@/api/products/products.queries";
+import AlertModal from "@/components/products/single-product/AlertModal";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
 import { pageLevelLocalization } from "@/constants/localization";
-import { fromFormDataToObject } from "@/lib/utils";
-import { IProduct } from "@/types";
+import { useUserStore } from "@/store";
+import { IProduct, UserState } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getCookie } from "cookies-next";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import AlertModal from "./AlertModal";
 
 const schema = yup.object().shape({
   comments: yup.string(),
@@ -17,8 +17,8 @@ const schema = yup.object().shape({
 
 export default function ViewersComments({ data }: { data: IProduct }) {
   const { mutate } = useEditProduct();
+  const { user } = useUserStore() as UserState;
   const accessToken = getCookie("accessToken");
-  console.log(data);
   const form = useForm({
     resolver: yupResolver(schema),
   });
@@ -31,12 +31,11 @@ export default function ViewersComments({ data }: { data: IProduct }) {
   } = form;
 
   const onSubmit = async (commentData: any) => {
-   
     const updatedProduct = {
       _id: data._id,
       comments: [commentData.comments],
     };
- 
+
     if (commentData.comments != "") {
       mutate(updatedProduct);
     } else {
@@ -90,7 +89,9 @@ export default function ViewersComments({ data }: { data: IProduct }) {
         ? data?.comments.map((comment) => {
             return (
               <div className="flex flex-col gap-3 pr-4 pt-6 mr-16 border-t-2 ">
-                <p className="text-primary bg-secondary w-fit p-1 rounded-full">{pageLevelLocalization.products.singleProduct.user}</p>
+                <p className="text-primary bg-secondary w-fit p-1 rounded-full">
+                  {user?.firstname} {user?.lastname}
+                </p>
                 <p className="pr-6 text-lg ">{comment}</p>
               </div>
             );

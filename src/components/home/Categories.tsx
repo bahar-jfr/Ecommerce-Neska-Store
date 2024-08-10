@@ -40,13 +40,14 @@ export default function Categories() {
       </p>
       <div className="flex items-center justify-center gap-24">
         {data?.map((category: ICategory) => {
-          console.log(category.slugname);
           return (
             <div
               key={category._id}
               className="flex flex-col items-center gap-4 cursor-pointer"
               onClick={() =>
-                router.push(`products?${setSearchParams("category", `${category._id}`)}`)
+                router.push(
+                  `products?${setSearchParams("category", `${category._id}`)}`
+                )
               }
             >
               <Image

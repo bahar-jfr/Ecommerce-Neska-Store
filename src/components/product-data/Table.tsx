@@ -19,7 +19,7 @@ import { IProduct } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import EditForm from "./EditForm";
+import EditForm from "@/components/product-data/EditForm";
 
 export default function TableProduct() {
   const [page, setPage] = useState(1);

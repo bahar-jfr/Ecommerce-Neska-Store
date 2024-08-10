@@ -1,15 +1,13 @@
 import { api } from "@/api/api.config";
 import { toast } from "@/components/ui/use-toast";
 import { pageLevelLocalization } from "@/constants/localization";
-import { IAddProduct, IParams, IProduct } from "@/types";
+import { IParams, IProduct } from "@/types";
 
 enum EToastVariant {
   Success = "success",
   Destructive = "destructive",
   Default = "default",
 }
-
-
 
 export async function getProducts(params?: IParams) {
   const paramsObject: any = {};
@@ -73,8 +71,13 @@ export async function deleteProduct(id: string) {
   return api.delete(`/products/${id}`);
 }
 
-export async function editProductImage({id,data}:{id:string,data?:any}) {
-  console.log(id)
+export async function editProductImage({
+  id,
+  data,
+}: {
+  id: string;
+  data?: any;
+}) {
   const res = await api.patch(`/products/${id}`, data);
   return res.data;
 }

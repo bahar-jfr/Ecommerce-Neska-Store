@@ -24,12 +24,11 @@ export default function TableInventory() {
   const [sort, setSort] = useState("");
   const { data, refetch } = useGetProducts({
     page: page,
-    limit: 3,
+    limit: 5,
     sort: sort,
   });
   const [totalPage, setTotalPage] = useState(data?.total_pages);
   const { mutate, isPending } = useEditMultiProduct();
-  console.log(data);
   const [products, setProducts] = useState<IProduct[]>([]);
   const [editProducts, setEditProducts] = useState<Partial<IProduct>[]>([]);
   const [isEdit, SetIsEdit] = useState<Record<string, boolean | string>>({
@@ -126,11 +125,18 @@ export default function TableInventory() {
                 {localization.productName}{" "}
               </TableHead>
               <TableHead className="  text-right text-primary font-bold w-1/4">
-                <span className="flex items-center gap-3"> {localization.price} <IoIosArrowDown onClick={() => setSort("price")}/></span>
+                <span className="flex items-center gap-3">
+                  {" "}
+                  {localization.price}{" "}
+                  <IoIosArrowDown onClick={() => setSort("price")} />
+                </span>
               </TableHead>
               <TableHead className=" flex justify-center gap-2 items-center text-right text-primary font-bold w-1/4 rounded-tl-lg">
-                <span className="flex items-center gap-3"> {pageLevelLocalization.inventory.inventory} <IoIosArrowDown  onClick={() => setSort("quantity")}/></span>
-              
+                <span className="flex items-center gap-3">
+                  {" "}
+                  {pageLevelLocalization.inventory.inventory}{" "}
+                  <IoIosArrowDown onClick={() => setSort("quantity")} />
+                </span>
               </TableHead>
               <TableHead className="text-right text-primary font-bold w-1/4 rounded-tl-lg">
                 {pageLevelLocalization.inventory.discount}
@@ -211,7 +217,9 @@ export default function TableInventory() {
         <Button size={"sm"} onClick={handleNext}>
           &lt;&lt;
         </Button>
-        <span>صفحه {page} از {totalPage}</span>
+        <span>
+          صفحه {page} از {totalPage}
+        </span>
         <Button size={"sm"} onClick={handlePrev}>
           &gt;&gt;
         </Button>

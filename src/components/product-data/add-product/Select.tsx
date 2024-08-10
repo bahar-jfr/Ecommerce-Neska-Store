@@ -52,7 +52,7 @@ export function SelectItems({
         control.onChange(value);
       }}
     >
-      <SelectTrigger>
+      <SelectTrigger className="shadow-md">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
