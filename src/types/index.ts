@@ -47,12 +47,25 @@ export interface ISubcategory {
 export interface IOrders {
   _id: string;
   user: IUser;
-  products: IProduct[];
+  products:IOrderProduct[];
   totalPrice: number;
   deliveryDate: string;
   deliveryStatus: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface IOrderProduct {
+  count: number;
+  product: IProduct;
+  _id :string
+};
+
+export interface IAddOrder{
+  user: string;
+  products: { product: string; count: string }[];
+  deliveryStatus: boolean;
+  totalPrice:number
 }
 
 export interface IUser {
@@ -67,6 +80,11 @@ export interface IUser {
   updatedAt: string;
 }
 
+export interface UserState {
+  user: IUser | null;
+  setUser: (user: IUser) => void;
+}
+
 export interface IAddProduct {
   name: string;
   brand: string;
@@ -77,4 +95,19 @@ export interface IAddProduct {
   subcategory: string;
   category: string;
   images?: FileList ;
+}
+
+
+export interface ISignUpSuccess {
+  firstname: string;
+  lastname: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+  address: string;
+}
+
+export interface ISignUpError {
+  status: string;
+  message: string;
 }
