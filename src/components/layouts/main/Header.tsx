@@ -4,12 +4,16 @@ import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { localization, pageLevelLocalization } from "@/constants/localization";
-import { deleteCookie, hasCookie } from "cookies-next";
+import { useCartStore, useUserStore } from "@/store";
+import { UserState } from "@/types";
+import { deleteCookie, getCookie, hasCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -17,15 +21,24 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 import { IoPersonSharp } from "react-icons/io5";
 
 export default function Header() {
+  const { products } = useCartStore();
+  const { user } = useUserStore() as UserState;
   const accessToken = hasCookie("accessToken");
+  const userRole = getCookie("role");
   const router = useRouter();
 
   const handleLogout = () => {
+    localStorage.removeItem("user-storage");
     deleteCookie("accessToken");
     deleteCookie("refreshToken");
     deleteCookie("role");
     router.push("/");
   };
+
+  let productsCount = 0;
+  products.map((product) => {
+    productsCount += product.count;
+  });
 
   return (
     <header className="flex flex-col text-primary font-bold   top-0  left-0 w-full shadow-md ">
@@ -35,18 +48,20 @@ export default function Header() {
           <Input placeholder="جستجو" type="text" />
         </div>
         <div className="flex items-center justify-end w-1/3 gap-4">
-          <div className="relative">
-            <HiOutlineShoppingCart
-              size={38}
-              className="bg-slate-200 hover:bg-slate-300 p-2 rounded-full "
-            />
-            <Badge
-              variant="outline"
-              className="badge top-0 -start-0.2 absolute px-1 py-0.2 bg-blue-700 text-white"
-            >
-              8
-            </Badge>
-          </div>
+          <Link href={"/cart"}>
+            <div className="relative cursor-pointer">
+              <HiOutlineShoppingCart
+                size={38}
+                className="bg-slate-200 hover:bg-slate-300 p-2 rounded-full "
+              />
+              <Badge
+                variant="outline"
+                className="badge top-0 -start-0.2 absolute px-1 py-0.2 bg-blue-700 text-white"
+              >
+                {productsCount}
+              </Badge>
+            </div>
+          </Link>
           <DropdownMenu dir="rtl">
             <DropdownMenuTrigger asChild>
               <Avatar className="cursor-pointer">
@@ -55,21 +70,41 @@ export default function Header() {
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 mr-6 text-primary-foreground">
+            <DropdownMenuContent className="ml-4 text-primary-foreground ">
               {accessToken ? (
-                <DropdownMenuGroup
+                <>
+                  <DropdownMenuLabel className="flex gap-2 flex-row">
+                    {user?.firstname} {user?.lastname}
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                </>
+              ) : (
+                ""
+              )}
+              {accessToken ? (
+                <DropdownMenuItem
                   onClick={handleLogout}
                   className="pr-3 py-1 cursor-pointer hover:bg-secondary rounded-sm"
                 >
                   {pageLevelLocalization.auth.logout}
-                </DropdownMenuGroup>
+                </DropdownMenuItem>
               ) : (
-                <DropdownMenuGroup
-                  onClick={()=>router.push("/auth?action=login")}
+                <DropdownMenuItem
+                  onClick={() => router.push("/auth?action=login")}
                   className="pr-3 py-1 cursor-pointer hover:bg-secondary rounded-sm"
                 >
                   {pageLevelLocalization.auth.login}
-                </DropdownMenuGroup>
+                </DropdownMenuItem>
+              )}
+              {userRole === "ADMIN" ? (
+                <DropdownMenuItem
+                  onClick={() => router.push("/dashboard")}
+                  className="pr-3 py-1 cursor-pointer hover:bg-secondary rounded-sm"
+                >
+                  {pageLevelLocalization.adminLayout.dashboard}
+                </DropdownMenuItem>
+              ) : (
+                ""
               )}
             </DropdownMenuContent>
           </DropdownMenu>

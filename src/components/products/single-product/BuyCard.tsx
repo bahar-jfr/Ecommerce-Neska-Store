@@ -9,11 +9,20 @@ import {
 } from "@/components/ui/card";
 import { localization, pageLevelLocalization } from "@/constants/localization";
 import { formatPrice } from "@/lib/utils";
+import { useCartStore } from "@/store";
 import { IProduct } from "@/types";
 import { FaRegHeart } from "react-icons/fa";
 import { GoShieldCheck } from "react-icons/go";
 
 export default function BuyCard({ data }: { data: IProduct }) {
+  const { addProduct, updateCount, removeProduct, products } = useCartStore();
+
+  const productInCart = products.find(
+    (product) => product.productId === data?._id
+  );
+  const count = productInCart ? productInCart.count : 1;
+  const isInCart = products.some((product) => product.productId === data?._id);
+
   const finalPrice = data?.price - (data?.price * data?.discount) / 100;
   const Satisfaction =
     data?.rating.count === 0
@@ -37,6 +46,22 @@ export default function BuyCard({ data }: { data: IProduct }) {
     else if (+Satisfaction >= 40 && +Satisfaction < 70) return "text-attention";
     else return "text-success";
   })();
+
+  const handleAddProduct = async () => {
+    addProduct(data._id, count, data.discount, data.price);
+  };
+
+  const handleQuantity = async (increment: boolean) => {
+    if (increment) {
+      updateCount(data._id, count + 1);
+    } else {
+      if (count > 1) {
+        updateCount(data._id, count - 1);
+      } else {
+        removeProduct(data._id);
+      }
+    }
+  };
 
   return (
     <Card className="text-primary-foreground  flex flex-col gap-6 px-12 py-10 w-1/4 h-3/6 ">
@@ -96,9 +121,29 @@ export default function BuyCard({ data }: { data: IProduct }) {
       </CardContent>
       <CardFooter>
         {data?.quantity !== 0 ? (
-          <Button className="text-white w-full">
-            {pageLevelLocalization.products.singleProduct.addToCart}
-          </Button>
+          isInCart ? (
+            <div className="flex w-full">
+              <Button
+                className="text-white text-lg w-1/5"
+                onClick={() => handleQuantity(true)}
+              >
+                +
+              </Button>
+              <div className="flex items-center justify-center w-full text-2xl">
+                {count}
+              </div>
+              <Button
+                className="text-white text-lg font-semibold w-1/5"
+                onClick={() => handleQuantity(false)}
+              >
+                -
+              </Button>
+            </div>
+          ) : (
+            <Button className="text-white w-full" onClick={handleAddProduct}>
+              {pageLevelLocalization.products.singleProduct.addToCart}
+            </Button>
+          )
         ) : (
           <Button disabled className="text-white disabled:opacity-50 w-full">
             {pageLevelLocalization.products.nonexistent}
