@@ -1,5 +1,7 @@
 import { useGetOrders } from "@/api/orders/orders.queries";
+import Modal from "@/components/delivary-data/Modal";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -8,21 +10,36 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { pageLevelLocalization } from "@/constants/localization";
+import { localization, pageLevelLocalization } from "@/constants/localization";
+import { formatPrice } from "@/lib/utils";
 import { IOrders } from "@/types";
-
-import { Skeleton } from "@/components/ui/skeleton";
 import "moment-jalaali";
 import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function TableDelivary() {
-  const { data, isLoading } = useGetOrders();
+  const [page, setPage] = useState(1);
+  const { data, isLoading } = useGetOrders({ page: page, limit: 5 });
+  const [totalPage, setTotalPage] = useState(data?.total_pages);
   const statusParam = useSearchParams();
   const status = statusParam.get("status") || "pending";
   const moment = require("moment-jalaali");
 
+  useEffect(() => {
+    setTotalPage(data?.total_pages);
+    data;
+  }, [data, page]);
+
+  const handlePrev = () => {
+    setPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNext = () => {
+    setPage((prev) => Math.min(prev + 1, totalPage));
+  };
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 text-primary-foreground">
       <div className="rounded-lg border shadow-lg">
         <Table className="bg-white text-md rounded-lg">
           <TableHeader className="bg-primary  rounded-t-md">
@@ -72,14 +89,16 @@ export default function TableDelivary() {
                   return (
                     <TableRow key={order._id}>
                       <TableCell>{order.user.firstname}</TableCell>
-                      <TableCell>{order.totalPrice}</TableCell>
+                      <TableCell>
+                        {formatPrice(order.totalPrice)} {localization.toman}
+                      </TableCell>
                       <TableCell>
                         {moment(order.createdAt.split("T")[0]).format(
                           "jYYYY/jMM/jDD"
                         )}
                       </TableCell>
                       <TableCell>
-                        {pageLevelLocalization.delivary.checkOrder}
+                        <Modal order={order} />
                       </TableCell>
                     </TableRow>
                   );
@@ -88,10 +107,16 @@ export default function TableDelivary() {
         </Table>
       </div>
 
-      <div className="flex items-center gap-2">
-        <Button size={"sm"}>&lt;&lt;</Button>
-        <span></span>
-        <Button size={"sm"}>&gt;&gt;</Button>
+      <div className="flex items-center gap-2 pt-8">
+        <Button size={"sm"} onClick={handleNext}>
+          &lt;&lt;
+        </Button>
+        <span>
+          صفحه {page} از {totalPage}
+        </span>
+        <Button size={"sm"} onClick={handlePrev}>
+          &gt;&gt;
+        </Button>
       </div>
     </div>
   );

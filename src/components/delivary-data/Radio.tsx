@@ -16,7 +16,7 @@ export function RadioDelivaryStatus() {
   };
 
   return (
-    <RadioGroup defaultValue="pending" className="flex gap-6">
+    <RadioGroup defaultValue="pending" className="flex gap-6 text-primary-foreground">
       <div
         className="flex items-center space-x-2 "
         onClick={() =>
