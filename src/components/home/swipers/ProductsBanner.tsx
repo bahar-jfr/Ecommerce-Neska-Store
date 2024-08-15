@@ -12,6 +12,7 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import NescafeSlide from "@/components/home/banners/NescafeSlide";
 import StarbucksSlide from "@/components/home/banners/StarbucksSlide";
+import NesteleSlide from "../banners/NesteleSlide";
 
 export default function ProductsBanner() {
   return (
@@ -25,6 +26,9 @@ export default function ProductsBanner() {
       scrollbar={{ draggable: true }}
       className="custom-swiper w-full "
     >
+      <SwiperSlide>
+        <NesteleSlide/>
+      </SwiperSlide>
       <SwiperSlide>
         <NescafeSlide />
       </SwiperSlide>
