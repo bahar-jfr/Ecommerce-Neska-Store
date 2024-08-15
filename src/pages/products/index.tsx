@@ -1,29 +1,26 @@
+import { getProducts } from "@/api/products/products.api";
 import { useGetProducts } from "@/api/products/products.queries";
 import { MainLayout } from "@/components/layouts/main/Layout";
 import CardPreview from "@/components/products/card/CardPreview";
 import FilterBox from "@/components/products/Filter";
 import Error from "@/components/shared/Error";
 import Loading from "@/components/shared/Loading";
-import { IProduct } from "@/types";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import { IParams, IProduct } from "@/types";
+import { dehydrate, hydrate, QueryClient } from "@tanstack/react-query";
+import { GetServerSideProps } from "next";
 import { ReactElement } from "react";
 
-export default function ProductsPage() {
-  const params = useSearchParams();
-  const brandParams = params.get("brand");
-  const categoryParams = params.get("category");
-  const subcategoryParams = params.get("subcategory");
-  const sortParams = params.get("sort");
+export default function ProductsPage({
+  dehydratedState,
+  params,
+}: {
+  dehydratedState: any;
+  params: IParams;
+}) {
+  const queryClient = new QueryClient();
+  hydrate(queryClient, dehydratedState);
 
-  const { data, isLoading, error } = useGetProducts({
-    page: "",
-    limit: 100,
-    brand: brandParams,
-    category: categoryParams,
-    subcategory: subcategoryParams,
-    sort: sortParams,
-  });
+  const { data, isLoading, error } = useGetProducts(params);
 
   if (error) {
     return <Error message={error.message} />;
@@ -43,6 +40,37 @@ export default function ProductsPage() {
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  query,
+}) => {
+  const queryClient = new QueryClient();
+
+  const params: IParams = Object.fromEntries(
+    Object.entries({
+      page: "",
+      limit: 100,
+      brand: query.brand,
+      category: query.category,
+      subcategory: query.subcategory,
+      sort: query.sort,
+    }).filter(([key, value]) => value !== undefined)
+  );
+
+  await queryClient.prefetchQuery({
+    queryKey: ["products", params],
+    queryFn: () => getProducts(params),
+  });
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+      params,
+    },
+  };
+};
 
 ProductsPage.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;

@@ -6,7 +6,6 @@ import {
   editProductImage,
   getProductById,
   getProducts,
-  getProductsByParams,
 } from "@/api/products/products.api";
 import { useToast } from "@/components/ui/use-toast";
 import { pageLevelLocalization } from "@/constants/localization";
@@ -21,17 +20,10 @@ export function useGetProductById(id: string) {
   });
 }
 
-export function useGetProducts(params?: IParams) {
+export function useGetProducts(params: IParams ={}) {
   return useQuery({
     queryKey: ["products", params],
     queryFn: () => getProducts(params),
-  });
-}
-
-export function useGetProductsByParams(params?: string) {
-  return useQuery({
-    queryKey: ["products"],
-    queryFn: () => getProductsByParams(params),
   });
 }
 

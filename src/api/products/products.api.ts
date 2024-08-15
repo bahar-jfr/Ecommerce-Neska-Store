@@ -9,7 +9,7 @@ enum EToastVariant {
   Default = "default",
 }
 
-export async function getProducts(params?: IParams) {
+export async function getProducts(params: IParams = {}) {
   const paramsObject: any = {};
 
   if (params?.limit) paramsObject.limit = params.limit;
@@ -28,12 +28,8 @@ export async function getProducts(params?: IParams) {
   return res.data;
 }
 
-export async function getProductsByParams(params?: string) {
-  const res = await api.get(`/products${params}`);
-  return res.data;
-}
 
-export async function getProductById(id: string) {
+export async function getProductById(id?: string) {
   const res = await api.get(`/products/${id}`);
   return res.data;
 }
