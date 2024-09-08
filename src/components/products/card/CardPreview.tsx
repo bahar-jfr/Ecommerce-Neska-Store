@@ -27,10 +27,8 @@ export default function CardPreview({ data }: { data: IProduct }) {
         <CardTitle>
           <div className="flex items-center justify-center">
             <Image
-              src={`http://localhost:8000/${data?.images[0].replace(
-                "localhost:8000",
-                ""
-              )}`}
+              src={`${data?.images[0]
+             }`}
               alt={data.name}
               width={250}
               height={250}

@@ -7,7 +7,7 @@ import { ReactElement } from "react";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen w-full  flex flex-col gap-24  py-12 pb-32 px-24">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col gap-24  py-12 pb-32 px-24">
       <ProductsBanner />
       <DiscountProduct/>
       <Categories/>

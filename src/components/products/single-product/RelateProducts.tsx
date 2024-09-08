@@ -43,7 +43,7 @@ export default function RelateProducts({
           ?.filter((product:IProduct) => product._id != prdId)
           .map((product: IProduct) => {
             return (
-              <SwiperSlide>
+              <SwiperSlide key={product._id}>
                 <div className="w-3/4 h-[400px] p-4">
                   <CardPreview key={product._id} data={product} />
                 </div>

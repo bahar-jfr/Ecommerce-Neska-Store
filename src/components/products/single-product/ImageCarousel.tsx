@@ -38,10 +38,7 @@ export default function ImageCarousel({ data }: { data: IProduct }) {
           return (
             <SwiperSlide key={index}>
               <Image
-                src={`http://localhost:8000/${image.replace(
-                  "localhost:8000",
-                  ""
-                )}`}
+                src={`${image}`}
                 alt={data.name}
                 width={500}
                 height={500}
@@ -63,10 +60,7 @@ export default function ImageCarousel({ data }: { data: IProduct }) {
               }`}
             >
               <Image
-                src={`http://localhost:8000/${image.replace(
-                  "localhost:8000",
-                  ""
-                )}`}
+                src={`${image}`}
                 alt={data.name}
                 width={100}
                 height={100}

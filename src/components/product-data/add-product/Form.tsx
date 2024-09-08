@@ -28,6 +28,7 @@ export default function AddProductForm() {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = form;
 
   const onSubmit = async (data: {
@@ -71,6 +72,7 @@ export default function AddProductForm() {
     }; */
 
     mutate(formData);
+    reset();
   };
 
   const handleImages = (e: React.ChangeEvent<HTMLInputElement>) => {

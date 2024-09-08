@@ -56,7 +56,7 @@ export default function FilterBox() {
             <RadioGroup className="px-4 py-4">
               {categories?.map((category: ICategory) => {
                 return (
-                  <div className="flex items-center gap-3 justify-between py-1 ">
+                  <div key={category._id} className="flex items-center gap-3 justify-between py-1 ">
                     <RadioGroupItem
                       value={category._id}
                       id={category._id}
@@ -84,7 +84,7 @@ export default function FilterBox() {
             <RadioGroup className="px-4 py-4">
               {subcategories?.map((subcategory: ISubcategory) => {
                 return (
-                  <div className="flex items-center gap-3 justify-between py-1 ">
+                  <div key={subcategory._id} className="flex items-center gap-3 justify-between py-1 ">
                     <RadioGroupItem
                       value={subcategory._id}
                       id={subcategory._id}

@@ -86,9 +86,12 @@ export default function ViewersComments({ data }: { data: IProduct }) {
       </Form>
 
       {data?.comments && data?.comments.length > 0
-        ? data?.comments.map((comment) => {
+        ? data?.comments.map((comment, index) => {
             return (
-              <div className="flex flex-col gap-3 pr-4 pt-6 mr-16 border-t-2 ">
+              <div
+                key={index}
+                className="flex flex-col gap-3 pr-4 pt-6 mr-16 border-t-2 "
+              >
                 <p className="text-primary bg-secondary w-fit p-1 rounded-full">
                   {user?.firstname} {user?.lastname}
                 </p>

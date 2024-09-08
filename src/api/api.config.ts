@@ -1,7 +1,7 @@
 import axios from "axios";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
-export const BASE_URL = "http://localhost:8000/api";
+export const BASE_URL = "https://neska-store.liara.run/api";
 
 export const api = axios.create({
   baseURL: BASE_URL,

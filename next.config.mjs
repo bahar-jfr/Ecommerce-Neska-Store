@@ -9,7 +9,7 @@ const nextConfig = {
         pathname: "/images/products/**",
       },
     ], 
-    domains: ["localhost"],
+    domains: ["neska-store.liara.run"],
   },
 };
 

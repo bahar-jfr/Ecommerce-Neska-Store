@@ -86,10 +86,8 @@ export default function TableProduct() {
                   </TableCell>
                   <TableCell className="font-medium flex items-center justify-center">
                     <Image
-                      src={`http://localhost:8000/${product?.images[0].replace(
-                        "localhost:8000",
-                        ""
-                      )}`}
+                      src={`${product?.images[0]
+                    }`}
                       alt={product.name}
                       width={65}
                       height={50}
@@ -102,7 +100,9 @@ export default function TableProduct() {
                   <TableCell className="text-center">
                     <div className="flex items-center gap-4 justify-center">
                       <span className="transition-all ease-in px-2 py-1 hover:bg-tableRow hover:scale-125 rounded-full">
-                        <Modal children={<EditForm productData={product} />} />
+                        <Modal>
+                        <EditForm productData={product} />
+                        </Modal>
                       </span>
                       <span className="transition-all ease-in px-2 py-1 hover:bg-tableRow hover:scale-125 rounded-full">
                         <AlertModal id={product._id} />

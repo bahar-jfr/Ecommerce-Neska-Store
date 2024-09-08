@@ -33,7 +33,7 @@ export function DropDown() {
         <DropdownMenuGroup>
           {categories?.map((category:ICategory) => {
             return (
-              <DropdownMenuSub>
+              <DropdownMenuSub key={category._id}>
                 <DropdownMenuSubTrigger className="gap-2">
                   {category.name}
                 </DropdownMenuSubTrigger>

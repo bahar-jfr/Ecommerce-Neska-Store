@@ -40,10 +40,7 @@ export default function CardPreview({
         <CardTitle>
           <div className="w-full">
             <Image
-              src={`http://localhost:8000/${productData?.data?.product?.images[0].replace(
-                "localhost:8000",
-                ""
-              )}`}
+              src={`${productData?.data?.product?.images[0].replace}`}
               alt={productData?.data?.product?.name}
               width={120}
               height={200}

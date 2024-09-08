@@ -37,7 +37,7 @@ export default function DiscountProduct() {
       >
         {products?.data?.products.map((product: IProduct) => {
           return (
-            <SwiperSlide className="p-8">
+            <SwiperSlide key={product._id} className="p-8">
               <DiscountCard key={product._id} data={product} />
             </SwiperSlide>
           );

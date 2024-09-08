@@ -62,8 +62,8 @@ export default function TableDelivary() {
             {isLoading
               ? Array(3)
                   .fill(Skeleton)
-                  .map(() => (
-                    <TableRow>
+                  .map((index) => (
+                    <TableRow key={index}>
                       <TableCell>
                         <Skeleton className="w-1/3 h-[10px] bg-tableRow" />
                       </TableCell>
