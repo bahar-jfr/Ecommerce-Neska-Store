@@ -40,7 +40,7 @@ export default function CardPreview({
         <CardTitle>
           <div className="w-full">
             <Image
-              src={`${productData?.data?.product?.images[0].replace}`}
+              src={`${productData?.data?.product?.images[0]}`}
               alt={productData?.data?.product?.name}
               width={120}
               height={200}

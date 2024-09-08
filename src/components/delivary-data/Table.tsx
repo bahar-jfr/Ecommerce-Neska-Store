@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 
 export default function TableDelivary() {
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useGetOrders({ page: page, limit: 5 });
+  const { data, isFetching } = useGetOrders({ page: page, limit: 5 });
   const [totalPage, setTotalPage] = useState(data?.total_pages);
   const statusParam = useSearchParams();
   const status = statusParam.get("status") || "pending";
@@ -27,8 +27,7 @@ export default function TableDelivary() {
 
   useEffect(() => {
     setTotalPage(data?.total_pages);
-    data;
-  }, [data, page]);
+  }, [data]);
 
   const handlePrev = () => {
     setPage((prev) => Math.max(prev - 1, 1));
@@ -59,10 +58,10 @@ export default function TableDelivary() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {isLoading
+            {isFetching
               ? Array(3)
-                  .fill(Skeleton)
-                  .map((index) => (
+                  .fill(null)
+                  .map((_, index) => (
                     <TableRow key={index}>
                       <TableCell>
                         <Skeleton className="w-1/3 h-[10px] bg-tableRow" />
@@ -79,13 +78,13 @@ export default function TableDelivary() {
                     </TableRow>
                   ))
               : (status === "pending"
-                  ? data.data.orders.filter(
+                  ? data?.data?.orders?.filter(
                       (order: IOrders) => !order.deliveryStatus
                     )
-                  : data.data.orders.filter(
+                  : data?.data?.orders?.filter(
                       (order: IOrders) => order.deliveryStatus
                     )
-                ).map((order: IOrders) => {
+                )?.map((order: IOrders) => {
                   return (
                     <TableRow key={order._id}>
                       <TableCell>{order.user.firstname}</TableCell>

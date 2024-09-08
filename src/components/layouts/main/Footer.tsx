@@ -23,7 +23,7 @@ export default function Footer() {
         </div>
         <div className="flex flex-col gap-6">
           <p className="text-xl font-bold ">{pageLevelLocalization.footer.contact}</p>
-          <div className="text-tertiary flex flex-row-reverse gap-5">
+          <div className="text-tertiary flex flex-row-reverse gap-5 flex-wrap">
             <IoLogoTwitter
               size={32}
               className="bg-quaternary rounded-full p-1.5 hover:bg-white transition-all ease-out"
